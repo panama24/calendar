@@ -34,7 +34,14 @@ const Weeks = ({ date, handleDayClick, numberOfDaysInMonth, startIdx }) => {
       {weeksArray.map((week, weekIdx) => (
         <Week key={weekIdx}>
           {week.map((day, dayIdx) => (
-            <Day key={dayIdx} today={date.date() === day} onClick={() => handleDayClick(day)}>{day}</Day>
+            <Day
+            key={dayIdx}
+            today={date.date() === day}
+            onClick={() => handleDayClick(day)}
+            onMouseDown={() => console.log('same as clicked?')}
+          >
+            {day}
+            </Day>
           ))}
         </Week>
       ))}
