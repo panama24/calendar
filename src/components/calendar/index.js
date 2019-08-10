@@ -1,5 +1,5 @@
 import React from 'react';
-import { generateWeeksArray } from '../../helpers';
+import { generateWeeksArray } from './helpers';
 import {
   Day,
   Grid,
@@ -10,7 +10,7 @@ import {
   WeekdayHeader,
 } from './styles';
 
-const DAYS_OF_WEEK = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+const WEEKDAY_SHORTNAMES = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
 const Navigation = ({ icon, onClick }) => (
   <StyledNavigation type='button' onClick={onClick}>
@@ -21,12 +21,12 @@ const Navigation = ({ icon, onClick }) => (
 
 const DaysOfWeek = () => (
   <WeekdayHeader>
-    {DAYS_OF_WEEK.map((day, i) => <Weekday key={i}>{day}</Weekday>)}
+    {WEEKDAY_SHORTNAMES.map((day, i) => <Weekday key={i}>{day}</Weekday>)}
   </WeekdayHeader>
 );
 
 
-const Weeks = ({ numberOfDaysInMonth, startIdx }) => {
+const Weeks = ({ date, handleDayClick, numberOfDaysInMonth, startIdx }) => {
   const weeksArray = generateWeeksArray(numberOfDaysInMonth, startIdx)
 
   return (
@@ -34,7 +34,7 @@ const Weeks = ({ numberOfDaysInMonth, startIdx }) => {
       {weeksArray.map((week, weekIdx) => (
         <Week key={weekIdx}>
           {week.map((day, dayIdx) => (
-            <Day key={dayIdx}>{day}</Day>
+            <Day key={dayIdx} today={date.date() === day} onClick={() => handleDayClick(day)}>{day}</Day>
           ))}
         </Week>
       ))}
@@ -43,35 +43,36 @@ const Weeks = ({ numberOfDaysInMonth, startIdx }) => {
 };
 
 const Calendar = ({
+  handleDayClick,
   date,
   handleNavigationClick,
   numberOfDaysInMonth,
   numberOfEmptyCells,
   startIdx,
-}) => {
-  return (
-    <Grid>
-      <div>
-        <Header>
-          <Navigation
-            icon={'<'}
-            onClick={() => handleNavigationClick('back')}
-          />
-          <div>{date.format('MMMM')}</div>
-          <div>{date.format('YYYY')}</div>
-          <Navigation
-            icon={'>'}
-            onClick={() => handleNavigationClick('forward')}
-          />
-        </Header>
-        <DaysOfWeek />
-        <Weeks
-          numberOfDaysInMonth={numberOfDaysInMonth}
-          startIdx={startIdx}
+}) => (
+  <Grid>
+    <div>
+      <Header>
+        <Navigation
+          icon={'<'}
+          onClick={() => handleNavigationClick('back')}
         />
-      </div>
-    </Grid>
-  );
-};
+        <div>{date.format('MMMM')}</div>
+        <div>{date.format('YYYY')}</div>
+        <Navigation
+          icon={'>'}
+          onClick={() => handleNavigationClick('forward')}
+        />
+      </Header>
+      <DaysOfWeek />
+      <Weeks
+        handleDayClick={handleDayClick}
+        date={date}
+        numberOfDaysInMonth={numberOfDaysInMonth}
+        startIdx={startIdx}
+      />
+    </div>
+  </Grid>
+);
 
 export default Calendar;

@@ -17,6 +17,7 @@ const GREY = '#E8E8E8';
 const Day = styled.div`
   padding: 6px;
   border: 1px solid ${GREY};
+  background: ${({ today }) => today && "palevioletred"};
 `;
 
 const Grid = styled.div`

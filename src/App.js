@@ -40,9 +40,19 @@ function App() {
     .startOf('month')
     .day();
 
+  const handleDayClick = n => {
+    const currentDateStr = moment(currentDate).format('YYYY-MM-DD');
+    const partialDate = currentDateStr.split('-').slice(0, 2).join('-');
+    const formattedNumber = ("0" + n).slice(-2);
+    const dateStr = `${partialDate}-${formattedNumber}`;
+
+    return dateStr;
+  };
+
   return (
     <AppContainer>
       <Calendar
+        handleDayClick={handleDayClick}
         date={currentDate}
         handleNavigationClick={handleNavigationClick}
         startIdx={startIdx}
