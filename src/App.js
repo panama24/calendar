@@ -66,6 +66,7 @@ function App() {
       <Modal
         isShowing={isShowing}
         hide={toggle}
+        content='hello'
       />
     </AppContainer>
   );
