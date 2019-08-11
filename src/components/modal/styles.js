@@ -6,6 +6,7 @@ const ModalContainer = styled.div`
   left: 40px;
   right: 40px;
   bottom: 40px;
+  max-width: 448px;
 `;
 
 const Body = styled.div`
