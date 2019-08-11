@@ -8,9 +8,9 @@ const AddTimeWrapper = styled.div`
 
 const Text = styled.span`
   line-height: 32px;
-  font-size: 14px;
+  font-size: 12px;
   padding: 10px;
-  color: grey;
+  color: #696969;
 
   &:hover {
     background: #eee;
@@ -44,7 +44,7 @@ const DescriptionWrapper = styled.div`
 
 const Description = styled(Title)`
   border: none;
-  font-size: 14px;
+  font-size: 12px;
   width: 50%;
   padding: 10px;
   margin-bottom: 0;
@@ -81,7 +81,6 @@ const AddTimeButton = styled(Button)`
   color: grey;
   border: 1px solid #ccc;
   background: white;
-  margin-left: 104px;
   padding: 0.5rem 0;
 
   &:hover {

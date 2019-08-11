@@ -65,8 +65,7 @@ function App() {
         numberOfDaysInMonth={numberOfDaysInMonth}
       />
       <Modal isShowing={isShowing} hide={toggle}>
-        {selectedDay}
-        <Form />
+        <Form selectedDay={selectedDay} />
       </Modal>
     </AppContainer>
   );

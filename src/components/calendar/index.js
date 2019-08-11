@@ -35,7 +35,7 @@ const Weeks = ({ date, handleDayClick, numberOfDaysInMonth, startIdx }) => {
       {weeksArray.map((week, weekIdx) => (
         <Week key={weekIdx}>
           {week.map((day, dayIdx) => (
-            <Day key={dayIdx} onClick={() => handleDayClick(day)}>
+            <Day key={dayIdx} onClick={() => {day ? handleDayClick(day) : console.log('can I do this?')}}>
               {day && <Number today={date.date() === day && moment().isSame(date, 'month')}>{day}</Number>}
             </Day>
           ))}
