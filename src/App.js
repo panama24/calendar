@@ -26,7 +26,7 @@ function App() {
 
   const getNumberOfDaysInMonth = firstDay => moment(firstDay).daysInMonth();
 
-  const handleNavigationClick = (direction) => {
+  const clickNavigationHandler = (direction) => {
     if (direction === 'forward') {
       const nextDate = moment(currentDate).add(1, 'M');
       setCurrentDate(nextDate);
@@ -45,7 +45,7 @@ function App() {
     .day();
 
   const { isShowing, toggle } = useModal();
-  const handleDayClick = n => {
+  const clickScheduleEventHandler = n => {
     const currentDateStr = moment(currentDate).format('YYYY-MM-DD');
     const partialDate = currentDateStr.split('-').slice(0, 2).join('-');
     const formattedNumber = ("0" + n).slice(-2);
@@ -55,12 +55,15 @@ function App() {
     toggle();
   };
 
+  const clickTodayHandler = () => setCurrentDate(moment());
+
   return (
     <AppContainer>
       <Calendar
-        handleDayClick={handleDayClick}
+        clickNavigationHandler={clickNavigationHandler}
+        clickScheduleEventHandler={clickScheduleEventHandler}
+        clickTodayHandler={clickTodayHandler}
         date={currentDate}
-        handleNavigationClick={handleNavigationClick}
         startIdx={startIdx}
         numberOfDaysInMonth={numberOfDaysInMonth}
       />
