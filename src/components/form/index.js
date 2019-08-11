@@ -19,6 +19,32 @@ import { getNearestStartEndTimes } from '../../helpers';
 
 const formatDate = date => moment(date).format('MMM DD, YYYY');
 
+const TimeInputs = ({
+  endTime,
+  formValues,
+  handleInputChange,
+  startTime
+}) => startTime ?  (
+  <>
+    <Time
+      name="startTime"
+      onChange={handleInputChange}
+      placeholder={startTime}
+      type="text"
+      value={formValues.startTime || startTime}
+    />-
+    <Time
+      name="endTime"
+      onChange={handleInputChange}
+      placeholder={endTime}
+      type="text"
+      value={formValues.endTime || endTime}
+    />
+  </>
+) : (
+  <>-</>
+);
+
 const Form = ({ formSubmissionHandler, selectedDay }) => {
   const [formValues, setFormValues] = useState({
       title: '',
@@ -27,16 +53,17 @@ const Form = ({ formSubmissionHandler, selectedDay }) => {
       endDate: formatDate(selectedDay),
       startTime: '',
       endTime: ''
-    });
-  const [startTime, setStartTime] = useState('');
-  const [endTime, setEndTime] = useState('');
+  });
 
   const formattedDate = formatDate(selectedDay);
 
   const handleTimeSelect = () => {
     const { end, start } = getNearestStartEndTimes();
-    setEndTime(end);
-    setStartTime(start);
+    setFormValues({
+      ...formValues,
+      startTime: start,
+      endTime: end
+    });
   }
 
   const handleInputChange = e => {
@@ -66,26 +93,12 @@ const Form = ({ formSubmissionHandler, selectedDay }) => {
                 type="text"
                 value={formValues.startDate}
               />
-              {startTime ? (
-                <>
-                  <Time
-                    name="startTime"
-                    onChange={handleInputChange}
-                    placeholder={startTime}
-                    type="text"
-                    value={formValues.startTime}
-                  />-
-                  <Time
-                    name="endTime"
-                    onChange={handleInputChange}
-                    placeholder={endTime}
-                    type="text"
-                    value={formValues.endTime}
-                  />
-                </>
-              ) : (
-                <>-</>
-              )}
+              <TimeInputs
+                endTime={formValues.endTime}
+                formValues={formValues}
+                handleInputChange={handleInputChange}
+                startTime={formValues.startTime}
+              />
               <DateInput
                 name="endDate"
                 onChange={handleInputChange}
@@ -96,7 +109,7 @@ const Form = ({ formSubmissionHandler, selectedDay }) => {
             </div>
             <Button
               type="button"
-              hide={startTime}
+              hide={formValues.startTime}
               onClick={() => handleTimeSelect()}>
               Add Time
             </Button>
@@ -112,7 +125,12 @@ const Form = ({ formSubmissionHandler, selectedDay }) => {
           </DescriptionWrapper>
         </div>
         <SubmitWrapper>
-          <Save type="submit" value="Submit" onClick={() => formSubmissionHandler(formValues)}>Save</Save>
+          <Save
+            type="submit"
+            value="Submit"
+            onClick={() => formSubmissionHandler(formValues)}>
+            Save
+          </Save>
         </SubmitWrapper>
       </form>
     </FormWrapper>

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const Button = styled.a`
+  cursor: pointer;
   display: ${({ hide }) => hide ? 'none' : 'flex'};
   justify-content: center;
   border-radius: 5px;
