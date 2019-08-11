@@ -12,12 +12,10 @@ const device = {
   large: `(min-width: ${size.large})`,
 };
 
-const GREY = '#E8E8E8';
-
 const AppContainer = styled.div`
   font-family: 'Google Sans',Roboto,Arial,sans-serif;
   display: grid;
   height: 100vh;
 `;
 
-export { AppContainer };
+export { AppContainer, device };

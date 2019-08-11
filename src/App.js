@@ -11,6 +11,7 @@ function App() {
   const [firstDayOfMonth, setFirstDayOfMonth] = useState('');
   const [numberOfDaysInMonth, setNumberOfDaysInMonth] = useState(0);
   const [selectedDay, setSelectedDay] = useState('');
+  const [scheduledEvents, setScheduledEvents] = useState([]);
 
   useEffect(() => {
     const firstDay = getFirstDay(currentDate);
@@ -57,6 +58,11 @@ function App() {
 
   const clickTodayHandler = () => setCurrentDate(moment());
 
+  const formSubmissionHandler = values => {
+    setScheduledEvents([ ...scheduledEvents, { ...values }]);
+    toggle();
+  };
+
   return (
     <AppContainer>
       <Calendar
@@ -64,11 +70,13 @@ function App() {
         clickScheduleEventHandler={clickScheduleEventHandler}
         clickTodayHandler={clickTodayHandler}
         date={currentDate}
+        scheduledEvents={scheduledEvents}
+        selectedDay={selectedDay}
         startIdx={startIdx}
         numberOfDaysInMonth={numberOfDaysInMonth}
       />
       <Modal isShowing={isShowing} hide={toggle}>
-        <Form selectedDay={selectedDay} />
+        <Form formSubmissionHandler={formSubmissionHandler} selectedDay={selectedDay} />
       </Modal>
     </AppContainer>
   );

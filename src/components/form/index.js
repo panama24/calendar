@@ -1,34 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 
 import {
   AddTimeWrapper,
+  DateInput,
   Description,
   DescriptionWrapper,
   FormWrapper,
   Save,
   SubmitWrapper,
-  Text,
+  Time,
   Title,
   TitleWrapper,
 } from './styles';
 
 import { Button } from '../shared/button';
+import { getNearestStartEndTimes } from '../../helpers';
 
-const Form = ({ selectedDay }) => {
+const formatDate = date => moment(date).format('MMM DD, YYYY');
+
+const Form = ({ formSubmissionHandler, selectedDay }) => {
+  const [formValues, setFormValues] = useState({
+      title: '',
+      description: '',
+      startDate: formatDate(selectedDay),
+      endDate: formatDate(selectedDay),
+      startTime: '',
+      endTime: ''
+    });
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
-  const formattedDate = moment(selectedDay).format('MMM DD, YYYY');
+
+  const formattedDate = formatDate(selectedDay);
 
   const handleTimeSelect = () => {
-    const now = moment();
-    const remainder = 30 - (now.minute() % 30);
-    const nearestStartTime = now.add(remainder, 'minutes').format('h:mma');
-    const nearestEndTime = now.add(remainder, 'minutes').add(1, 'hour').format('h:mma');
-
-    setStartTime(nearestStartTime);
-    setEndTime(nearestEndTime);
+    const { end, start } = getNearestStartEndTimes();
+    setEndTime(end);
+    setStartTime(start);
   }
+
+  const handleInputChange = e => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
 
   return (
     <FormWrapper>
@@ -36,34 +50,69 @@ const Form = ({ selectedDay }) => {
         <TitleWrapper>
           <Title
             name="title"
+            onChange={handleInputChange}
             placeholder='Add title'
             type="text"
+            value={formValues.title}
           />
         </TitleWrapper>
         <div>
           <AddTimeWrapper>
             <div>
-              <Text>{formattedDate}</Text>-
-              {!!startTime && (
+              <DateInput
+                name="startDate"
+                onChange={handleInputChange}
+                placeholder={formattedDate}
+                type="text"
+                value={formValues.startDate}
+              />
+              {startTime ? (
                 <>
-                  <Text>{startTime}</Text>-
-                  <Text>{endTime}</Text>
+                  <Time
+                    name="startTime"
+                    onChange={handleInputChange}
+                    placeholder={startTime}
+                    type="text"
+                    value={formValues.startTime}
+                  />-
+                  <Time
+                    name="endTime"
+                    onChange={handleInputChange}
+                    placeholder={endTime}
+                    type="text"
+                    value={formValues.endTime}
+                  />
                 </>
+              ) : (
+                <>-</>
               )}
-              <Text>{formattedDate}</Text>
+              <DateInput
+                name="endDate"
+                onChange={handleInputChange}
+                placeholder={formattedDate}
+                type="text"
+                value={formValues.endDate}
+              />
             </div>
-            <Button type="button" onClick={() => handleTimeSelect()}>Add Time</Button>
+            <Button
+              type="button"
+              hide={startTime}
+              onClick={() => handleTimeSelect()}>
+              Add Time
+            </Button>
           </AddTimeWrapper>
           <DescriptionWrapper>
             <Description
               name="description"
+              onChange={handleInputChange}
               placeholder='Add description'
               type="text"
+              value={formValues.description}
             />
           </DescriptionWrapper>
         </div>
         <SubmitWrapper>
-          <Save type="submit" value="Submit">Save</Save>
+          <Save type="submit" value="Submit" onClick={() => formSubmissionHandler(formValues)}>Save</Save>
         </SubmitWrapper>
       </form>
     </FormWrapper>

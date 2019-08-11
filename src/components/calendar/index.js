@@ -4,14 +4,19 @@ import { generateWeeksArray } from './helpers';
 import {
   Day,
   Grid,
+  Event,
   Header,
   Number,
+  NumberWrapper,
   StyledNavigation,
   Week,
   Weekday,
   WeekdayHeader,
 } from './styles';
+
 import { Button } from '../shared/button';
+
+import { getDailyEvents } from '../../helpers';
 
 const WEEKDAY_SHORTNAMES = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
@@ -24,21 +29,70 @@ const Navigation = ({ icon, onClick }) => (
 
 const DaysOfWeek = () => (
   <WeekdayHeader>
-    {WEEKDAY_SHORTNAMES.map((day, i) => <Weekday key={i}>{day}</Weekday>)}
+    {WEEKDAY_SHORTNAMES.map((day, i) => (
+      <Weekday key={i}>{day}</Weekday>
+    ))}
   </WeekdayHeader>
 );
 
+const renderNumber = (day, today) => day && (
+  <NumberWrapper>
+    <Number today={today}>
+      {day}
+    </Number>
+  </NumberWrapper>
+);
 
-const Weeks = ({ date, clickScheduleEventHandler, numberOfDaysInMonth, startIdx }) => {
+const renderEvents = events => !!events.length &&
+  events.map(({ description, title }) => (
+    <Event key={title}>
+      {title}: {description}
+    </Event>
+  ));
+
+
+const noop = () => ({});
+const DayContainer = ({ clickScheduleEventHandler, day, date, scheduledEvents }) => {
+  const today = date.date() === day && moment().isSame(date, 'month');
+  const year = date.year();
+  const month = date.month();
+  const formatMonth = String(month).length > 1 ? month : `0${month}`;
+  const formatDay = String(day).length > 1 ? day : `0${day}`;
+
+  const dateStr = `${year}-${formatMonth}-${formatDay}`;
+  const formatDate = moment(dateStr, 'YYYY-MM-DD').add(1, 'month')
+
+  const events = getDailyEvents(scheduledEvents, formatDate);
+
+  return (
+    <Day onClick={() => { day ?  clickScheduleEventHandler(day) : noop()}}>
+      {renderNumber(day, today)}
+      {renderEvents(events)}
+    </Day>
+  );
+};
+
+const Weeks = ({
+  date,
+  clickScheduleEventHandler,
+  numberOfDaysInMonth,
+  scheduledEvents,
+  startIdx,
+}) => {
   const weeksArray = generateWeeksArray(numberOfDaysInMonth, startIdx)
+
   return (
     <div>
       {weeksArray.map((week, weekIdx) => (
         <Week key={weekIdx}>
           {week.map((day, dayIdx) => (
-            <Day key={dayIdx} onClick={() => {day ? clickScheduleEventHandler(day) : console.log('can I do this?')}}>
-              {day && <Number today={date.date() === day && moment().isSame(date, 'month')}>{day}</Number>}
-            </Day>
+            <DayContainer
+              clickScheduleEventHandler={clickScheduleEventHandler}
+              day={day}
+              date={date}
+              key={dayIdx}
+              scheduledEvents={scheduledEvents}
+            />
           ))}
         </Week>
       ))}
@@ -53,6 +107,7 @@ const Calendar = ({
   date,
   numberOfDaysInMonth,
   numberOfEmptyCells,
+  scheduledEvents,
   startIdx,
 }) => (
   <Grid>
@@ -70,6 +125,7 @@ const Calendar = ({
         clickScheduleEventHandler={clickScheduleEventHandler}
         date={date}
         numberOfDaysInMonth={numberOfDaysInMonth}
+        scheduledEvents={scheduledEvents}
         startIdx={startIdx}
       />
     </div>

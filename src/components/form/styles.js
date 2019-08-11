@@ -7,19 +7,6 @@ const AddTimeWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const Text = styled.span`
-  line-height: 32px;
-  font-size: 12px;
-  padding: 10px;
-  color: #696969;
-
-  &:hover {
-    background: #eee;
-    border-radius: 3px;
-    padding: 10px;
-  }
-`;
-
 const TitleWrapper = styled.div`
   margin: 0 0 36px 10px;
 `;
@@ -57,6 +44,20 @@ const Description = styled(Title)`
   }
 `;
 
+const DateInput = styled(Title)`
+  border: none;
+  font-size: 12px;
+  padding: 10px;
+  margin-bottom: 0;
+  width: 82px;
+
+  &:hover {
+    background: #eee;
+    border-radius: 3px;
+    padding: 10px;
+  }
+`;
+
 const SubmitWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -78,14 +79,19 @@ const Save = styled(Button)`
   }
 `;
 
+const Time = styled(DateInput)`
+  width: 50px;
+`;
+
 export {
   AddTimeWrapper,
+  DateInput,
   Description,
   DescriptionWrapper,
   FormWrapper,
   Save,
   SubmitWrapper,
-  Text,
+  Time,
   Title,
   TitleWrapper,
 };

@@ -17,8 +17,24 @@ const DARK_GREY = '#696969';
 
 const Day = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column
+  align-items: center;
+  justify-content: flex-start;
   border: 1px solid ${GREY};
+`;
+
+const Event = styled.span`
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  font-size: 9px;
+  font-weight: bold;
+  color: #F3BF16;
+  border: 1px solid #F3BF16;
+  border-radius: 4px;
+  height: 18px;
+  width: 100%;
+  padding-left: 4px;
 `;
 
 const Grid = styled.div`
@@ -62,6 +78,10 @@ const Number = styled.span`
   &:hover {
     background: ${({ today }) => today ? 'dodgerBlue' : '#eee'};
   }
+`;
+
+const NumberWrapper = styled.div`
+  height: 28px;
 `;
 
 const StyledNavigation = styled.button`
@@ -110,9 +130,11 @@ const WeekdayHeader = styled.div`
 
 export {
   Day,
+  Event,
   Grid,
   Header,
   Number,
+  NumberWrapper,
   StyledNavigation,
   Week,
   Weekday,
