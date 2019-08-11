@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Button } from '../shared/button';
 
 const AddTimeWrapper = styled.div`
   display: flex;
@@ -56,7 +57,12 @@ const Description = styled(Title)`
   }
 `;
 
-const Button = styled.a`
+const SubmitWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const Save = styled(Button)`
   display: flex;
   justify-content: center;
   border-radius: 5px;
@@ -65,36 +71,19 @@ const Button = styled.a`
   background: dodgerBlue;
   color: white;
   border: 2px solid white;
-`;
-
-const SubmitWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const AddTimeButton = styled(Button)`
-  align-items: center;
-  width: 60px;
-  height: 8px;
-  font-size: 10px;
-  font-weight: bold;
-  color: grey;
-  border: 1px solid #ccc;
-  background: white;
-  padding: 0.5rem 0;
+  height: 16px;
 
   &:hover {
-    background: #eee;
+    background: #4F94FB;
   }
 `;
 
 export {
-  AddTimeButton,
   AddTimeWrapper,
-  Button,
   Description,
   DescriptionWrapper,
   FormWrapper,
+  Save,
   SubmitWrapper,
   Text,
   Title,

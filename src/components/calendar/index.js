@@ -11,6 +11,7 @@ import {
   Weekday,
   WeekdayHeader,
 } from './styles';
+import { Button } from '../shared/button';
 
 const WEEKDAY_SHORTNAMES = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
@@ -57,8 +58,10 @@ const Calendar = ({
     <div>
       <Header>
         <Navigation icon={'<'} onClick={() => handleNavigationClick('back')} />
+        <Button>Today</Button>
         <div>{date.format('MMMM')}</div>
         <div>{date.format('YYYY')}</div>
+        <Button>Month</Button>
         <Navigation icon={'>'} onClick={() => handleNavigationClick('forward')} />
       </Header>
       <DaysOfWeek />

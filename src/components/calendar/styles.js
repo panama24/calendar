@@ -36,8 +36,13 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 12px;
-  font-weight: bold;
-  font-size: 24px;
+  color: #3c4043;
+  font-family: 'Google Sans',Roboto,Arial,sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 28px;
+  white-space: nowrap;
 `;
 
 const Number = styled.span`
@@ -65,7 +70,6 @@ const StyledNavigation = styled.button`
   color: ${DARK_GREY};
   cursor: pointer;
   font-size: 24px;
-  font-weight: bold;
 
   &:focus {
     outline: none;
@@ -95,10 +99,13 @@ const WeekdayHeader = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   text-align: center;
-  font-weight: bold;
   padding: 8px 0;
   border-top: 1px solid ${GREY};
   border-botton: 1px solid ${GREY};
+  color: #70757a;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 20px;
 `;
 
 export {

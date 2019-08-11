@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 
 import {
-  AddTimeButton,
   AddTimeWrapper,
-  Button,
   Description,
   DescriptionWrapper,
   FormWrapper,
+  Save,
   SubmitWrapper,
   Text,
   Title,
   TitleWrapper,
 } from './styles';
+
+import { Button } from '../shared/button';
 
 const Form = ({ selectedDay }) => {
   const [startTime, setStartTime] = useState('');
@@ -51,7 +52,7 @@ const Form = ({ selectedDay }) => {
               )}
               <Text>{formattedDate}</Text>
             </div>
-            <AddTimeButton type="button" onClick={() => handleTimeSelect()}>Add Time</AddTimeButton>
+            <Button type="button" onClick={() => handleTimeSelect()}>Add Time</Button>
           </AddTimeWrapper>
           <DescriptionWrapper>
             <Description
@@ -62,7 +63,7 @@ const Form = ({ selectedDay }) => {
           </DescriptionWrapper>
         </div>
         <SubmitWrapper>
-          <Button type="submit" value="Submit">Save</Button>
+          <Save type="submit" value="Submit">Save</Save>
         </SubmitWrapper>
       </form>
     </FormWrapper>
