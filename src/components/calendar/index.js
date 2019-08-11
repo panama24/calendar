@@ -5,7 +5,7 @@ import {
   Day,
   Grid,
   Event,
-  Header,
+  HeaderWrapper,
   Number,
   NumberWrapper,
   StyledNavigation,
@@ -20,12 +20,22 @@ import { getDailyEvents } from '../../helpers';
 
 const WEEKDAY_SHORTNAMES = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
+const Header = ({ clickNavigationHandler, clickTodayHandler, date }) => (
+  <HeaderWrapper>
+    <Navigation icon={'<'} onClick={() => clickNavigationHandler('back')} />
+    <Button onClick={() => clickTodayHandler()}>Today</Button>
+    <div>{date.format('MMMM')}</div>
+    <div>{date.format('YYYY')}</div>
+    <Button>Month</Button>
+    <Navigation icon={'>'} onClick={() => clickNavigationHandler('forward')} />
+  </HeaderWrapper>
+);
+
 const Navigation = ({ icon, onClick }) => (
   <StyledNavigation type='button' onClick={onClick}>
     {icon}
   </StyledNavigation>
 );
-
 
 const DaysOfWeek = () => (
   <WeekdayHeader>
@@ -106,20 +116,16 @@ const Calendar = ({
   clickTodayHandler,
   date,
   numberOfDaysInMonth,
-  numberOfEmptyCells,
   scheduledEvents,
   startIdx,
 }) => (
   <Grid>
     <div>
-      <Header>
-        <Navigation icon={'<'} onClick={() => clickNavigationHandler('back')} />
-        <Button onClick={() => clickTodayHandler()}>Today</Button>
-        <div>{date.format('MMMM')}</div>
-        <div>{date.format('YYYY')}</div>
-        <Button>Month</Button>
-        <Navigation icon={'>'} onClick={() => clickNavigationHandler('forward')} />
-      </Header>
+      <Header
+        clickNavigationHandler={clickNavigationHandler}
+        clickTodayHandler={clickTodayHandler}
+        date={date}
+      />
       <DaysOfWeek />
       <Weeks
         clickScheduleEventHandler={clickScheduleEventHandler}

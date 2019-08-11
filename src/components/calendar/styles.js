@@ -44,7 +44,7 @@ const Grid = styled.div`
   border: 1px solid ${GREY};
 `;
 
-const Header = styled.div`
+const HeaderWrapper = styled.div`
   display: grid;
   grid-auto-flow: column;
   grid-column-start: 1;
@@ -132,7 +132,7 @@ export {
   Day,
   Event,
   Grid,
-  Header,
+  HeaderWrapper,
   Number,
   NumberWrapper,
   StyledNavigation,

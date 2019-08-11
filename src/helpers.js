@@ -1,5 +1,7 @@
 import moment from 'moment';
 
+// defaults to current month
+const getNumberOfDaysInMonth = (date = null) => moment(date).daysInMonth();
 const getNearestStartEndTimes = () => {
   const now = moment();
   const remainder = 30 - (moment(now).minute() % 30);
@@ -39,5 +41,6 @@ const getDailyEvents = (events, day) => events.filter(({ startDate }) => {
 export {
   getDailyEvents,
   getNearestStartEndTimes,
+  getNumberOfDaysInMonth,
   isSameDay,
 };

@@ -18,8 +18,7 @@ const Modal = ({ children, hide, isShowing }) => isShowing ? ReactDOM.createPort
       </CloseWrapper>
       {children}
     </Body>
-  </ModalContainer>
-  , document.body
+  </ModalContainer>, document.body
 ) : null;
 
 export default Modal;

@@ -5,6 +5,7 @@ import Calendar from './components/calendar';
 import Modal from './components/modal';
 import useModal from './components/modal/useModal';
 import Form from './components/form';
+import { getNumberOfDaysInMonth } from './helpers';
 
 function App() {
   const [currentDate, setCurrentDate] = useState(moment());
@@ -15,9 +16,8 @@ function App() {
 
   useEffect(() => {
     const firstDay = getFirstDay(currentDate);
-    setFirstDayOfMonth(firstDay);
-
     const numberOfDaysInMonth = getNumberOfDaysInMonth(firstDay);
+    setFirstDayOfMonth(firstDay);
     setNumberOfDaysInMonth(numberOfDaysInMonth);
   }, []);
 
@@ -25,20 +25,16 @@ function App() {
     .startOf('month')
     .format('YYYY-MM-DD hh:mm');
 
-  const getNumberOfDaysInMonth = firstDay => moment(firstDay).daysInMonth();
+  const navigateByMonth = month => {
+    setCurrentDate(month);
+    setFirstDayOfMonth(getFirstDay(month));
+    setNumberOfDaysInMonth(getNumberOfDaysInMonth(month));
+  };
 
   const clickNavigationHandler = (direction) => {
-    if (direction === 'forward') {
-      const nextDate = moment(currentDate).add(1, 'M');
-      setCurrentDate(nextDate);
-      setFirstDayOfMonth(getFirstDay(nextDate));
-      setNumberOfDaysInMonth(getNumberOfDaysInMonth(nextDate));
-    } else {
-      const nextDate = moment(currentDate).subtract(1, 'M');
-      setCurrentDate(nextDate);
-      setFirstDayOfMonth(getFirstDay(nextDate));
-      setNumberOfDaysInMonth(getNumberOfDaysInMonth(nextDate));
-    }
+    direction === 'forward' ?
+      navigateByMonth(moment(currentDate).add(1, 'M')) :
+      navigateByMonth(moment(currentDate).subtract(1, 'M'));
   }
 
   const startIdx = moment(currentDate)
@@ -70,13 +66,15 @@ function App() {
         clickScheduleEventHandler={clickScheduleEventHandler}
         clickTodayHandler={clickTodayHandler}
         date={currentDate}
-        scheduledEvents={scheduledEvents}
-        selectedDay={selectedDay}
-        startIdx={startIdx}
         numberOfDaysInMonth={numberOfDaysInMonth}
+        scheduledEvents={scheduledEvents}
+        startIdx={startIdx}
       />
       <Modal isShowing={isShowing} hide={toggle}>
-        <Form formSubmissionHandler={formSubmissionHandler} selectedDay={selectedDay} />
+        <Form
+          formSubmissionHandler={formSubmissionHandler}
+          selectedDay={selectedDay}
+        />
       </Modal>
     </AppContainer>
   );
