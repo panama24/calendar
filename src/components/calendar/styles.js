@@ -50,10 +50,13 @@ const Number = styled.span`
   height: 24px;
   width: 24px;
   line-height: 24px;
-  border-radius: 30px; /* or 50% */
-  background-color: #eee;
-  background: ${({ today }) => today && "dodgerBlue"};
+  border-radius: 30px;
+  background: ${({ today }) => today ? 'dodgerBlue' : 'white'};
   color: ${({ today }) => today ? "white" : DARK_GREY};
+
+  &:hover {
+    background: ${({ today }) => today ? 'dodgerBlue' : '#eee'};
+  }
 `;
 
 const StyledNavigation = styled.button`
