@@ -9,7 +9,6 @@ const ModalContainer = styled.div`
 `;
 
 const Body = styled.div`
-  width: 448px;
   padding: 6px 4px;
   display: flex;
   flex-direction: column;
@@ -34,17 +33,9 @@ const CloseWrapper = styled.span`
   margin-right: 6px;
 `;
 
-
-const Form = styled.div`
-  background: #ccc;
-  padding: 24px;
-  margin: 12px;
-`;
-
 export {
   Body,
   Close,
   CloseWrapper,
-  Form,
   ModalContainer,
 }

@@ -13,14 +13,16 @@ const device = {
 };
 
 const GREY = '#E8E8E8';
+const DARK_GREY = '#696969';
 
 const Day = styled.div`
-  padding: 6px;
+  display: flex;
+  justify-content: center;
   border: 1px solid ${GREY};
-  background: ${({ today }) => today && "palevioletred"};
 `;
 
 const Grid = styled.div`
+  color: ${DARK_GREY};
   display: grid;
   background: white;
   border: 1px solid ${GREY};
@@ -38,10 +40,26 @@ const Header = styled.div`
   font-size: 24px;
 `;
 
+const Number = styled.span`
+  cursor: pointer;
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 4px;
+  display: block;
+  height: 24px;
+  width: 24px;
+  line-height: 24px;
+  border-radius: 30px; /* or 50% */
+  background-color: #eee;
+  background: ${({ today }) => today && "dodgerBlue"};
+  color: ${({ today }) => today ? "white" : DARK_GREY};
+`;
+
 const StyledNavigation = styled.button`
   padding: 6px;
   border: none;
-  color: #A9A9A9;
+  color: ${DARK_GREY};
   cursor: pointer;
   font-size: 24px;
   font-weight: bold;
@@ -84,6 +102,7 @@ export {
   Day,
   Grid,
   Header,
+  Number,
   StyledNavigation,
   Week,
   Weekday,

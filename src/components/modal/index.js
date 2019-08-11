@@ -5,11 +5,10 @@ import {
   Body,
   Close,
   CloseWrapper,
-  Form,
   ModalContainer,
 } from './styles';
 
-const Modal = ({ content, hide, isShowing }) => isShowing ? ReactDOM.createPortal(
+const Modal = ({ children, hide, isShowing }) => isShowing ? ReactDOM.createPortal(
   <ModalContainer>
     <Body>
       <CloseWrapper>
@@ -17,9 +16,7 @@ const Modal = ({ content, hide, isShowing }) => isShowing ? ReactDOM.createPorta
           <span>X</span>
         </Close>
       </CloseWrapper>
-      <Form>
-        {content}
-      </Form>
+      {children}
     </Body>
   </ModalContainer>
   , document.body

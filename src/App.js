@@ -4,11 +4,13 @@ import { AppContainer } from './styles';
 import Calendar from './components/calendar';
 import Modal from './components/modal';
 import useModal from './components/modal/useModal';
+import Form from './components/form';
 
 function App() {
   const [currentDate, setCurrentDate] = useState(moment());
   const [firstDayOfMonth, setFirstDayOfMonth] = useState('');
   const [numberOfDaysInMonth, setNumberOfDaysInMonth] = useState(0);
+  const [selectedDay, setSelectedDay] = useState('');
 
   useEffect(() => {
     const firstDay = getFirstDay(currentDate);
@@ -49,10 +51,9 @@ function App() {
     const formattedNumber = ("0" + n).slice(-2);
     const dateStr = `${partialDate}-${formattedNumber}`;
 
+    setSelectedDay(dateStr);
     toggle();
-    return dateStr;
   };
-
 
   return (
     <AppContainer>
@@ -63,11 +64,10 @@ function App() {
         startIdx={startIdx}
         numberOfDaysInMonth={numberOfDaysInMonth}
       />
-      <Modal
-        isShowing={isShowing}
-        hide={toggle}
-        content='hello'
-      />
+      <Modal isShowing={isShowing} hide={toggle}>
+        {selectedDay}
+        <Form />
+      </Modal>
     </AppContainer>
   );
 }

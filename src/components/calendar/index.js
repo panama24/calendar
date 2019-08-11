@@ -1,9 +1,11 @@
 import React from 'react';
+import moment from 'moment';
 import { generateWeeksArray } from './helpers';
 import {
   Day,
   Grid,
   Header,
+  Number,
   StyledNavigation,
   Week,
   Weekday,
@@ -28,19 +30,13 @@ const DaysOfWeek = () => (
 
 const Weeks = ({ date, handleDayClick, numberOfDaysInMonth, startIdx }) => {
   const weeksArray = generateWeeksArray(numberOfDaysInMonth, startIdx)
-
   return (
     <div>
       {weeksArray.map((week, weekIdx) => (
         <Week key={weekIdx}>
           {week.map((day, dayIdx) => (
-            <Day
-            key={dayIdx}
-            today={date.date() === day}
-            onClick={() => handleDayClick(day)}
-            onMouseDown={() => console.log('same as clicked?')}
-          >
-            {day}
+            <Day key={dayIdx} onClick={() => handleDayClick(day)}>
+              {day && <Number today={date.date() === day && moment().isSame(date, 'month')}>{day}</Number>}
             </Day>
           ))}
         </Week>
@@ -60,16 +56,10 @@ const Calendar = ({
   <Grid>
     <div>
       <Header>
-        <Navigation
-          icon={'<'}
-          onClick={() => handleNavigationClick('back')}
-        />
+        <Navigation icon={'<'} onClick={() => handleNavigationClick('back')} />
         <div>{date.format('MMMM')}</div>
         <div>{date.format('YYYY')}</div>
-        <Navigation
-          icon={'>'}
-          onClick={() => handleNavigationClick('forward')}
-        />
+        <Navigation icon={'>'} onClick={() => handleNavigationClick('forward')} />
       </Header>
       <DaysOfWeek />
       <Weeks
