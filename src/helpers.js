@@ -29,13 +29,19 @@ const isSameDay = (moment1, moment2) =>
 
 // day must have this format: moment(day, 'YYYY-MM-DD') and
 // in some cases, append `.add(1, 'month')` bc month is 0 indexed
-const getDailyEvents = (events, day) => events.filter(({ startDate }) => {
+const getDailyEvents = (events, day) => events.filter(({ endDate, startDate }) => {
   const start = moment(startDate, 'MMM DD, YYYY')
-    .format('YYYY-MM-DD');;
+    .format('YYYY-MM-DD');
+
+  const end = moment(endDate, 'MMM DD, YYYY')
+    .format('YYYY-MM-DD');
 
   const startMoment = moment(start);
+  const endMoment = moment(end);
 
-  return isSameDay(startMoment, day);
+  return isSameDay(startMoment, day) ||
+    isSameDay(endMoment, day) ||
+    moment(day, 'MMM DD YYYY').isBetween(moment(startDate, 'MMM DD YYYY'), moment(endDate, 'MMM DD YYYY'));
 });
 
 export {

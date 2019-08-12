@@ -27,13 +27,13 @@ const Event = styled.span`
   display: flex;
   justify-content: start;
   align-items: center;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: bold;
   color: #F3BF16;
   border: 1px solid #F3BF16;
-  border-radius: 4px;
+  border-radius: 2px;
   height: 18px;
-  width: 100%;
+  width: 96%;
   padding-left: 4px;
 `;
 

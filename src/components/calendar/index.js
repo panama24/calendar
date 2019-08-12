@@ -54,11 +54,14 @@ const renderNumber = (day, today) => day && (
 );
 
 const renderEvents = events => !!events.length &&
-  events.map(({ description, title }) => (
-    <Event key={title}>
-      {title}: {description}
-    </Event>
-  ));
+  events.map(({ description, title }) => {
+    const copy = `${title}: ${description}`;
+    return (
+      <Event key={title}>
+        {!!title ? copy : '(No title)'}
+      </Event>
+    )}
+  );
 
 
 const noop = () => ({});
