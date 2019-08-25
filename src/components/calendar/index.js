@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import DaysOfWeek from './weekdays';
 import Header from './header';
 import { generateWeeksArray } from './helpers';
 import {
@@ -9,23 +10,11 @@ import {
   Number,
   NumberWrapper,
   Week,
-  Weekday,
-  WeekdayHeader,
 } from './styles';
 
 import Popup from '../popup';
 import Form from '../form';
 import { getDailyEvents } from '../../helpers';
-
-const WEEKDAY_SHORTNAMES = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-
-const DaysOfWeek = () => (
-  <WeekdayHeader>
-    {WEEKDAY_SHORTNAMES.map((day, i) => (
-      <Weekday key={i}>{day}</Weekday>
-    ))}
-  </WeekdayHeader>
-);
 
 const DayNumber = ({ day, today }) => day && (
   <NumberWrapper>
@@ -112,45 +101,6 @@ const DayContainer = ({
   );
 };
 
-const Weeks = ({
-  clickScheduleEventHandler,
-  day,
-  currentDate,
-  formSubmissionHandler,
-  isShowing,
-  numberOfDaysInMonth,
-  popupId,
-  selectedDay,
-  scheduledEvents,
-  setId,
-  startIdx,
-  toggle,
-}) => {
-  return (
-    <div>
-      {generateWeeksArray(numberOfDaysInMonth, startIdx).map((week, weekIdx) => (
-        <Week key={weekIdx}>
-          {week.map((day, dayIdx) => (
-            <DayContainer
-              clickScheduleEventHandler={clickScheduleEventHandler}
-              day={day}
-              currentDate={currentDate}
-              key={dayIdx}
-              scheduledEvents={scheduledEvents}
-              formSubmissionHandler={formSubmissionHandler}
-              selectedDay={selectedDay}
-              isShowing={isShowing}
-              toggle={toggle}
-              popupId={popupId}
-              setId={setId}
-            />
-          ))}
-        </Week>
-      ))}
-    </div>
-  );
-};
-
 const Calendar = ({
   clickScheduleEventHandler,
   getToday,
@@ -174,19 +124,25 @@ const Calendar = ({
         currentDate={currentDate}
       />
       <DaysOfWeek />
-      <Weeks
-        clickScheduleEventHandler={clickScheduleEventHandler}
-        currentDate={currentDate}
-        numberOfDaysInMonth={numberOfDaysInMonth}
-        scheduledEvents={scheduledEvents}
-        startIdx={startIdx}
-        formSubmissionHandler={formSubmissionHandler}
-        selectedDay={selectedDay}
-        isShowing={isShowing}
-        toggle={toggle}
-        popupId={popupId}
-        setId={setId}
-      />
+        {generateWeeksArray(numberOfDaysInMonth, startIdx).map((week, weekIdx) => (
+          <Week key={weekIdx}>
+            {week.map((day, dayIdx) => (
+              <DayContainer
+                clickScheduleEventHandler={clickScheduleEventHandler}
+                day={day}
+                currentDate={currentDate}
+                key={dayIdx}
+                scheduledEvents={scheduledEvents}
+                formSubmissionHandler={formSubmissionHandler}
+                selectedDay={selectedDay}
+                isShowing={isShowing}
+                toggle={toggle}
+                popupId={popupId}
+                setId={setId}
+              />
+            ))}
+          </Week>
+        ))}
     </div>
   </Grid>
 );

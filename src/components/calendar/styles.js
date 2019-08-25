@@ -117,7 +117,7 @@ const Weekday = styled.div`
   padding: 5px;
 `;
 
-const WeekdayHeader = styled.div`
+const Weekdays = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   text-align: center;
@@ -168,6 +168,6 @@ export {
   TooltipWrapper,
   Week,
   Weekday,
-  WeekdayHeader,
+  Weekdays,
 };
 
