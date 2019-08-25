@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Button } from '../shared/button';
 
 const AddTimeWrapper = styled.div`
@@ -15,11 +15,25 @@ const FormWrapper = styled.div`
   padding: 12px;
 `;
 
+const slideoutKeyframes = keyframes`
+ 0% {
+    transform:scaleX(0);
+    border-bottom: none;
+  }
+
+  100% {
+    transform:scaleX(1);
+    border-bottom: 2px solid dodgerBlue;
+  }
+`;
+
 const Title = styled.input`
   border: none;
   border-bottom: 2px solid dodgerBlue;
-  width: 50%;
+  width: 99%;
   font-size: 24px;
+  animation-duration: 0.5s;
+  animation-name: ${slideoutKeyframes};
 
     &:focus {
       outline: none;
@@ -30,7 +44,7 @@ const DescriptionWrapper = styled.div`
   margin-top: 8px;
 `;
 
-const Description = styled(Title)`
+const Description = styled.input`
   border: none;
   font-size: 12px;
   width: 50%;
@@ -42,20 +56,16 @@ const Description = styled(Title)`
     border-radius: 3px;
     padding: 10px;
   }
+
+  &:focus {
+    outline: none;
+  }
 `;
 
-const DateInput = styled(Title)`
+const DateInput = styled(Description)`
   border: none;
   font-size: 12px;
-  padding: 10px;
-  margin-bottom: 0;
   width: 82px;
-
-  &:hover {
-    background: #eee;
-    border-radius: 3px;
-    padding: 10px;
-  }
 `;
 
 const SubmitWrapper = styled.div`

@@ -78,7 +78,7 @@ const Form = ({ formSubmissionHandler, selectedDay }) => {
           <Title
             name="title"
             onChange={handleInputChange}
-            placeholder='Add title'
+            placeholder='Add title and time'
             type="text"
             value={formValues.title}
           />
