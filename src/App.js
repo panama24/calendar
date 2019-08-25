@@ -7,7 +7,6 @@ import { getNumberOfDaysInMonth } from './helpers';
 
 function App() {
   const [currentDate, setCurrentDate] = useState(moment());
-  const [firstDayOfMonth, setFirstDayOfMonth] = useState('');
   const [numberOfDaysInMonth, setNumberOfDaysInMonth] = useState(0);
   const [selectedDay, setSelectedDay] = useState('');
   const [scheduledEvents, setScheduledEvents] = useState([]);
@@ -15,7 +14,6 @@ function App() {
   useEffect(() => {
     const firstDay = getFirstDay(currentDate);
     const numberOfDaysInMonth = getNumberOfDaysInMonth(firstDay);
-    setFirstDayOfMonth(firstDay);
     setNumberOfDaysInMonth(numberOfDaysInMonth);
   }, []);
 
@@ -25,7 +23,6 @@ function App() {
 
   const navigateByMonth = month => {
     setCurrentDate(month);
-    setFirstDayOfMonth(getFirstDay(month));
     setNumberOfDaysInMonth(getNumberOfDaysInMonth(month));
   };
 
