@@ -3,7 +3,6 @@ import moment from 'moment';
 import { AppContainer } from './styles';
 import Calendar from './components/calendar';
 import usePopup from './components/popup/usePopup';
-import Form from './components/form';
 import { getNumberOfDaysInMonth } from './helpers';
 
 function App() {

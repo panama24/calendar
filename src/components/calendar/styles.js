@@ -16,6 +16,7 @@ const GREY = '#E8E8E8';
 const DARK_GREY = '#696969';
 
 const Day = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column
   align-items: center;
@@ -129,6 +130,33 @@ const WeekdayHeader = styled.div`
   line-height: 20px;
 `;
 
+const TooltipWrapper = styled.div`
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1.42857143;
+  text-align: left;
+  text-align: start;
+  text-shadow: none;
+  text-transform: none;
+  white-space: normal;
+  word-break: normal;
+  word-spacing: normal;
+  word-wrap: normal;
+  font-size: 12px;
+  display: inline-block;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+  width: 416px;
+  padding: 12px;
+`;
+
 export {
   Day,
   Event,
@@ -137,6 +165,7 @@ export {
   Number,
   NumberWrapper,
   StyledNavigation,
+  TooltipWrapper,
   Week,
   Weekday,
   WeekdayHeader,

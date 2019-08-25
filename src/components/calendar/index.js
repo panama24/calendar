@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import moment from 'moment';
 import { generateWeeksArray } from './helpers';
 import Popup from '../popup';
@@ -17,7 +17,6 @@ import {
 } from './styles';
 
 import { Button } from '../shared/button';
-
 import { getDailyEvents } from '../../helpers';
 
 const WEEKDAY_SHORTNAMES = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -47,7 +46,7 @@ const DaysOfWeek = () => (
   </WeekdayHeader>
 );
 
-const renderNumber = (day, today) => day && (
+const DayNumber = ({ day, today }) => day && (
   <NumberWrapper>
     <Number today={today}>
       {day}
@@ -55,7 +54,7 @@ const renderNumber = (day, today) => day && (
   </NumberWrapper>
 );
 
-const renderEvents = events => !!events.length &&
+const Events = ({ events }) => !!events.length &&
   events.map(({ description, title }) => {
     const copy = `${title}: ${description}`;
     return (
@@ -64,7 +63,6 @@ const renderEvents = events => !!events.length &&
       </Event>
     )}
   );
-
 
 const noop = () => ({});
 const DayContainer = ({
@@ -93,8 +91,8 @@ const DayContainer = ({
   return (
     <>
       <Day onClick={() => { day ?  clickScheduleEventHandler(day) : noop()}}>
-        {renderNumber(day, today)}
-        {renderEvents(events)}
+        <DayNumber day={day} today={today} />
+        <Events events={events} />
       </Day>
       <Popup isShowing={isShowing && popupId === day} hide={toggle}>
         <Form
@@ -107,23 +105,22 @@ const DayContainer = ({
 };
 
 const Weeks = ({
-  date,
   clickScheduleEventHandler,
-  numberOfDaysInMonth,
-  scheduledEvents,
-  startIdx,
+  day,
+  date,
   formSubmissionHandler,
-  selectedDay,
   isShowing,
-  toggle,
+  numberOfDaysInMonth,
   popupId,
+  selectedDay,
+  scheduledEvents,
   setId,
+  startIdx,
+  toggle,
 }) => {
-  const weeksArray = generateWeeksArray(numberOfDaysInMonth, startIdx)
-
   return (
     <div>
-      {weeksArray.map((week, weekIdx) => (
+      {generateWeeksArray(numberOfDaysInMonth, startIdx).map((week, weekIdx) => (
         <Week key={weekIdx}>
           {week.map((day, dayIdx) => (
             <DayContainer
