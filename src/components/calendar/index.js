@@ -76,6 +76,8 @@ const DayContainer = ({
   formSubmissionHandler,
   isShowing,
   toggle,
+  popupId,
+  setId,
 }) => {
   const today = date.date() === day && moment().isSame(date, 'month');
   const year = date.year();
@@ -89,16 +91,18 @@ const DayContainer = ({
   const events = getDailyEvents(scheduledEvents, formatDate);
 
   return (
-    <Day onClick={() => { day ?  clickScheduleEventHandler(day) : noop()}}>
-      {renderNumber(day, today)}
-      {renderEvents(events)}
-      <Popup isShowing={isShowing} hide={toggle}>
+    <>
+      <Day onClick={() => { day ?  clickScheduleEventHandler(day) : noop()}}>
+        {renderNumber(day, today)}
+        {renderEvents(events)}
+      </Day>
+      <Popup isShowing={isShowing && popupId === day} hide={toggle}>
         <Form
           formSubmissionHandler={formSubmissionHandler}
           selectedDay={selectedDay}
         />
       </Popup>
-    </Day>
+    </>
   );
 };
 
@@ -112,6 +116,8 @@ const Weeks = ({
   selectedDay,
   isShowing,
   toggle,
+  popupId,
+  setId,
 }) => {
   const weeksArray = generateWeeksArray(numberOfDaysInMonth, startIdx)
 
@@ -130,6 +136,8 @@ const Weeks = ({
               selectedDay={selectedDay}
               isShowing={isShowing}
               toggle={toggle}
+              popupId={popupId}
+              setId={setId}
             />
           ))}
         </Week>
@@ -150,6 +158,8 @@ const Calendar = ({
   selectedDay,
   isShowing,
   toggle,
+  popupId,
+  setId,
 }) => (
   <Grid>
     <div>
@@ -169,6 +179,8 @@ const Calendar = ({
         selectedDay={selectedDay}
         isShowing={isShowing}
         toggle={toggle}
+        popupId={popupId}
+        setId={setId}
       />
     </div>
   </Grid>
