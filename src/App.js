@@ -29,13 +29,10 @@ function App() {
     .day();
 
   const { isShowing, popupId, setId, toggle } = usePopup();
-  const clickScheduleEventHandler = n => {
-    const currentDateStr = moment(currentDate).format('YYYY-MM-DD');
-    const partialDate = currentDateStr.split('-').slice(0, 2).join('-');
-    const formattedNumber = ("0" + n).slice(-2);
-    const dateStr = `${partialDate}-${formattedNumber}`;
 
-    setId(n);
+  const schedulingEvent = (date, uniquePopupId) => {
+    const dateStr = moment(date).format('YYYY-MM-DD');
+    setId(uniquePopupId);
     setSelectedDay(dateStr);
     toggle();
   };
@@ -50,7 +47,7 @@ function App() {
   return (
     <AppContainer>
       <Calendar
-        clickScheduleEventHandler={clickScheduleEventHandler}
+        schedulingEvent={schedulingEvent}
         getToday={getToday}
         currentDate={currentDate}
         navigate={navigate}

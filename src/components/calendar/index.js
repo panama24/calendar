@@ -58,9 +58,10 @@ const Events = ({ events, isShowing, toggle }) => !!events.length &&
   );
 
 const noop = () => ({});
+const generatePopupId = number => `schedule-event-${number}`
 const DayContainer = ({
-  clickScheduleEventHandler,
-  day,
+  schedulingEvent,
+  clickableDay,
   currentDate,
   scheduledEvents,
   selectedDay,
@@ -70,39 +71,44 @@ const DayContainer = ({
   popupId,
   setId,
 }) => {
-  const today = currentDate.date() === day && moment().isSame(currentDate, 'month');
+  const isToday = currentDate.date() === clickableDay && moment().isSame(currentDate, 'month');
   const year = currentDate.year();
   const month = currentDate.month();
   const formatMonth = String(month).length > 1 ? month : `0${month}`;
-  const formatDay = String(day).length > 1 ? day : `0${day}`;
-
+  const formatDay = String(clickableDay).length > 1 ? clickableDay : `0${clickableDay}`;
   const dateStr = `${year}-${formatMonth}-${formatDay}`;
   const formatDate = moment(dateStr, 'YYYY-MM-DD').add(1, 'month')
 
   const events = getDailyEvents(scheduledEvents, formatDate);
 
+  const uniquePopupId = generatePopupId(clickableDay);
+  const showPopup = isShowing && popupId === uniquePopupId;
   return (
     <>
-      <Day onClick={() => { day ?  clickScheduleEventHandler(day) : noop()}}>
-        <DayNumber day={day} today={today} />
+      <Day onClick={() => { clickableDay ?  schedulingEvent(formatDate, uniquePopupId) : noop()}}>
+        <DayNumber day={clickableDay} today={isToday} />
         <Events
           events={events}
           isShowing={isShowing}
           toggle={toggle}
         />
       </Day>
-      <Popup isShowing={isShowing && popupId === day} hide={toggle}>
+      <Popup
+        hide={toggle}
+        id={uniquePopupId}
+        isShowing={showPopup}
+      >
         <Form
           formSubmissionHandler={formSubmissionHandler}
-          selectedDay={selectedDay}
-        />
+            selectedDay={selectedDay}
+          />
       </Popup>
     </>
   );
 };
 
 const Calendar = ({
-  clickScheduleEventHandler,
+  schedulingEvent,
   getToday,
   currentDate,
   navigate,
@@ -126,10 +132,10 @@ const Calendar = ({
       <DaysOfWeek />
         {generateWeeksArray(numberOfDaysInMonth, startIdx).map((week, weekIdx) => (
           <Week key={weekIdx}>
-            {week.map((day, dayIdx) => (
+            {week.map((clickableDay, dayIdx) => (
               <DayContainer
-                clickScheduleEventHandler={clickScheduleEventHandler}
-                day={day}
+                schedulingEvent={schedulingEvent}
+                clickableDay={clickableDay}
                 currentDate={currentDate}
                 key={dayIdx}
                 scheduledEvents={scheduledEvents}
