@@ -1,5 +1,13 @@
 import React from 'react';
-import { Event } from './styles';
+import {
+  Action,
+  Event,
+  EventIcon,
+  EventLockup,
+  TextWrapper,
+  Toolbar,
+  ViewEventBody,
+} from './styles';
 import Popup from '../popup';
 
 const Events = ({
@@ -30,16 +38,29 @@ const Events = ({
       <Event key={uniquePopupId} onClick={e => eventClickHandler(e)}>
         {copy}
       </Event>
-        <Popup
-          hide={toggle}
-          id={uniquePopupId}
-          isShowing={isShowing}
-          openId={popupId}
-        >
-          {title}
-          {`${startDate}-${endDate}`}
-          {`${startTime}-${endTime}`}
-          {description}
+      <Popup
+        hide={toggle}
+        id={uniquePopupId}
+        isShowing={isShowing}
+        openId={popupId}
+      >
+        <ViewEventBody>
+          <Toolbar>
+            <Action>edit</Action>
+            <Action>delete</Action>
+          </Toolbar>
+          <EventLockup>
+            <EventIcon />
+            <TextWrapper>
+              <span>{title}</span>
+              <span>{`${startDate}-${endDate}`} - {`${startTime}-${endTime}`}</span>
+            </TextWrapper>
+          </EventLockup>
+          <EventLockup>
+          <EventIcon />
+            <span>{description}</span>
+          </EventLockup>
+        </ViewEventBody>
       </Popup>
     </>
   )}

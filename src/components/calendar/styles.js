@@ -158,15 +158,55 @@ const TooltipWrapper = styled.div`
   padding: 12px;
 `;
 
+const Action = styled.span`
+  margin-left: 6px;
+  cursor: pointer;
+`;
+
+const Toolbar = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const ViewEventBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: -18px;
+  width: 90%;
+`;
+
+const EventIcon = styled.span`
+  height: 16px;
+  width: 16px;
+  background-color: dodgerBlue;
+  border-radius: 24%;
+  display: inline-block;
+  margin-right: 8px;
+`;
+
+const EventLockup = styled.div`
+  display: flex;
+  align-items: flex-start;
+`;
+
+const TextWrapper = styled.div`
+`;
+
 export {
+  Action,
   Day,
   Event,
+  EventIcon,
+  EventLockup,
   Grid,
   HeaderWrapper,
   Number,
   NumberWrapper,
   StyledNavigation,
+  TextWrapper,
+  Toolbar,
   TooltipWrapper,
+  ViewEventBody,
   Week,
   Weekday,
   Weekdays,
