@@ -54,13 +54,35 @@ const DayNumber = ({ day, today }) => day && (
   </NumberWrapper>
 );
 
-const Events = ({ events }) => !!events.length &&
-  events.map(({ description, title }) => {
-    const copy = `${title}: ${description}`;
+const Events = ({ events, isShowing, toggle }) => !!events.length &&
+  events.map(({
+    description,
+    endDate,
+    endTime,
+    startDate,
+    startTime,
+    title
+  }) => {
+    const copy = !!title ? `${title}: ${description}` : '(No title)';
+    const eventClickHandler = e => {
+      e.stopPropagation();
+      toggle();
+    };
+
+    // can I refactor to use same popover?
+    // set what type of popover and an id or something?
     return (
-      <Event key={title}>
-        {!!title ? copy : '(No title)'}
-      </Event>
+      <>
+        <Event key={`event-${title}`} onClick={e => eventClickHandler(e)}>
+          {copy}
+        </Event>
+        <Popup key={`popup-${title}`} isShowing={isShowing} hide={toggle}>
+          {title}
+          {`${startDate}-${endDate}`}
+          {`${startTime}-${endTime}`}
+          {description}
+        </Popup>
+      </>
     )}
   );
 
@@ -92,7 +114,11 @@ const DayContainer = ({
     <>
       <Day onClick={() => { day ?  clickScheduleEventHandler(day) : noop()}}>
         <DayNumber day={day} today={today} />
-        <Events events={events} />
+        <Events
+          events={events}
+          isShowing={isShowing}
+          toggle={toggle}
+        />
       </Day>
       <Popup isShowing={isShowing && popupId === day} hide={toggle}>
         <Form
