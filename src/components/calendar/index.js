@@ -24,52 +24,62 @@ const DayNumber = ({ day, today }) => day && (
   </NumberWrapper>
 );
 
-const Events = ({ events, isShowing, toggle }) => !!events.length &&
-  events.map(({
-    description,
-    endDate,
-    endTime,
-    startDate,
-    startTime,
-    title
-  }) => {
-    const copy = !!title ? `${title}: ${description}` : '(No title)';
-    const eventClickHandler = e => {
-      e.stopPropagation();
-      console.log('click');
-      // toggle();
-    };
+const Events = ({
+  clickableDay,
+  events,
+  isShowing,
+  popupId,
+  toggle,
+  viewingEvent,
+}) => !!events.length && events.map(({
+  description,
+  endDate,
+  endTime,
+  startDate,
+  startTime,
+  title
+}) => {
+  const copy = !!title ? `${title}: ${description}` : '(No title)';
+  const uniquePopupId = `view-event-${clickableDay}`;
 
-    // can I refactor to use same popover?
-    // set what type of popover and an id or something?
-    return (
-      <>
-        <Event key={`event-${title}`} onClick={e => eventClickHandler(e)}>
-          {copy}
-        </Event>
-        <Popup key={`popup-${title}`} isShowing={isShowing} hide={toggle}>
+  const eventClickHandler = e => {
+    e.stopPropagation();
+    viewingEvent(uniquePopupId);
+  };
+
+  return (
+    <>
+      <Event key={uniquePopupId} onClick={e => eventClickHandler(e)}>
+        {copy}
+      </Event>
+        <Popup
+          hide={toggle}
+          id={uniquePopupId}
+          isShowing={isShowing}
+          openId={popupId}
+        >
           {title}
           {`${startDate}-${endDate}`}
           {`${startTime}-${endTime}`}
           {description}
-        </Popup>
-      </>
-    )}
-  );
+      </Popup>
+    </>
+  )}
+);
 
 const noop = () => ({});
-const generatePopupId = number => `schedule-event-${number}`
 const DayContainer = ({
-  schedulingEvent,
   clickableDay,
   currentDate,
-  scheduledEvents,
-  selectedDay,
   formSubmissionHandler,
   isShowing,
-  toggle,
   popupId,
+  schedulingEvent,
+  scheduledEvents,
+  selectedDay,
   setId,
+  toggle,
+  viewingEvent,
 }) => {
   const isToday = currentDate.date() === clickableDay && moment().isSame(currentDate, 'month');
   const year = currentDate.year();
@@ -81,22 +91,25 @@ const DayContainer = ({
 
   const events = getDailyEvents(scheduledEvents, formatDate);
 
-  const uniquePopupId = generatePopupId(clickableDay);
-  const showPopup = isShowing && popupId === uniquePopupId;
+  const uniquePopupId = `schedule-event-${clickableDay}`;
   return (
     <>
       <Day onClick={() => { clickableDay ?  schedulingEvent(formatDate, uniquePopupId) : noop()}}>
         <DayNumber day={clickableDay} today={isToday} />
         <Events
+          clickableDay={clickableDay}
           events={events}
           isShowing={isShowing}
+          popupId={popupId}
           toggle={toggle}
+          viewingEvent={viewingEvent}
         />
       </Day>
       <Popup
         hide={toggle}
         id={uniquePopupId}
-        isShowing={showPopup}
+        isShowing={isShowing}
+        openId={popupId}
       >
         <Form
           formSubmissionHandler={formSubmissionHandler}
@@ -108,43 +121,45 @@ const DayContainer = ({
 };
 
 const Calendar = ({
-  schedulingEvent,
-  getToday,
   currentDate,
+  formSubmissionHandler,
+  getToday,
+  isShowing,
   navigate,
   numberOfDaysInMonth,
-  scheduledEvents,
-  startIdx,
-  formSubmissionHandler,
-  selectedDay,
-  isShowing,
-  toggle,
   popupId,
+  schedulingEvent,
+  scheduledEvents,
+  selectedDay,
   setId,
+  startIdx,
+  toggle,
+  viewingEvent,
 }) => (
   <Grid>
     <div>
       <Header
-        navigate={navigate}
         getToday={getToday}
         currentDate={currentDate}
+        navigate={navigate}
       />
       <DaysOfWeek />
         {generateWeeksArray(numberOfDaysInMonth, startIdx).map((week, weekIdx) => (
           <Week key={weekIdx}>
             {week.map((clickableDay, dayIdx) => (
               <DayContainer
-                schedulingEvent={schedulingEvent}
                 clickableDay={clickableDay}
                 currentDate={currentDate}
-                key={dayIdx}
-                scheduledEvents={scheduledEvents}
                 formSubmissionHandler={formSubmissionHandler}
-                selectedDay={selectedDay}
                 isShowing={isShowing}
-                toggle={toggle}
+                key={dayIdx}
                 popupId={popupId}
+                scheduledEvents={scheduledEvents}
+                schedulingEvent={schedulingEvent}
+                selectedDay={selectedDay}
                 setId={setId}
+                toggle={toggle}
+                viewingEvent={viewingEvent}
               />
             ))}
           </Week>

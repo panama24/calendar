@@ -36,6 +36,7 @@ const Event = styled.span`
   height: 18px;
   width: 96%;
   padding-left: 4px;
+  cursor: pointer;
 `;
 
 const Grid = styled.div`

@@ -37,6 +37,11 @@ function App() {
     toggle();
   };
 
+  const viewingEvent = uniquePopupId => {
+    setId(uniquePopupId);
+    toggle();
+  };
+
   const getToday = () => setCurrentDate(moment());
 
   const formSubmissionHandler = values => {
@@ -47,19 +52,20 @@ function App() {
   return (
     <AppContainer>
       <Calendar
-        schedulingEvent={schedulingEvent}
-        getToday={getToday}
         currentDate={currentDate}
+        formSubmissionHandler={formSubmissionHandler}
+        getToday={getToday}
+        isShowing={isShowing}
         navigate={navigate}
         numberOfDaysInMonth={numberOfDaysInMonth}
-        scheduledEvents={scheduledEvents}
-        startIdx={startIdx}
-        formSubmissionHandler={formSubmissionHandler}
-        selectedDay={selectedDay}
-        isShowing={isShowing}
         popupId={popupId}
+        schedulingEvent={schedulingEvent}
+        scheduledEvents={scheduledEvents}
+        selectedDay={selectedDay}
         setId={setId}
+        startIdx={startIdx}
         toggle={toggle}
+        viewingEvent={viewingEvent}
       />
     </AppContainer>
   );

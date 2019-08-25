@@ -7,7 +7,13 @@ import {
   PopupContainer,
 } from './styles';
 
-const Popup = ({ children, hide, id, isShowing }) => isShowing ? (
+const Popup = ({
+  children,
+  openId,
+  hide,
+  id,
+  isShowing,
+}) => isShowing && (openId === id) ?  (
   <PopupContainer>
     <Body>
       <CloseWrapper>
@@ -16,6 +22,8 @@ const Popup = ({ children, hide, id, isShowing }) => isShowing ? (
         </Close>
       </CloseWrapper>
       {children}
+      ID: {id}
+      {openId}
     </Body>
   </PopupContainer>
 ) : null;
