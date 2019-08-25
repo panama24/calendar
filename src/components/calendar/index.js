@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import { generateWeeksArray } from './helpers';
+import Popup from '../popup';
+import Form from '../form';
 import {
   Day,
   Grid,
@@ -65,7 +67,16 @@ const renderEvents = events => !!events.length &&
 
 
 const noop = () => ({});
-const DayContainer = ({ clickScheduleEventHandler, day, date, scheduledEvents }) => {
+const DayContainer = ({
+  clickScheduleEventHandler,
+  day,
+  date,
+  scheduledEvents,
+  selectedDay,
+  formSubmissionHandler,
+  isShowing,
+  toggle,
+}) => {
   const today = date.date() === day && moment().isSame(date, 'month');
   const year = date.year();
   const month = date.month();
@@ -78,10 +89,18 @@ const DayContainer = ({ clickScheduleEventHandler, day, date, scheduledEvents })
   const events = getDailyEvents(scheduledEvents, formatDate);
 
   return (
-    <Day onClick={() => { day ?  clickScheduleEventHandler(day) : noop()}}>
-      {renderNumber(day, today)}
-      {renderEvents(events)}
-    </Day>
+    <>
+      <Day onClick={() => { day ?  clickScheduleEventHandler(day) : noop()}}>
+        {renderNumber(day, today)}
+        {renderEvents(events)}
+      </Day>
+      <Popup isShowing={isShowing} hide={toggle}>
+        <Form
+          formSubmissionHandler={formSubmissionHandler}
+          selectedDay={selectedDay}
+        />
+      </Popup>
+    </>
   );
 };
 
@@ -91,6 +110,10 @@ const Weeks = ({
   numberOfDaysInMonth,
   scheduledEvents,
   startIdx,
+  formSubmissionHandler,
+  selectedDay,
+  isShowing,
+  toggle,
 }) => {
   const weeksArray = generateWeeksArray(numberOfDaysInMonth, startIdx)
 
@@ -105,6 +128,10 @@ const Weeks = ({
               date={date}
               key={dayIdx}
               scheduledEvents={scheduledEvents}
+              formSubmissionHandler={formSubmissionHandler}
+              selectedDay={selectedDay}
+              isShowing={isShowing}
+              toggle={toggle}
             />
           ))}
         </Week>
@@ -121,6 +148,10 @@ const Calendar = ({
   numberOfDaysInMonth,
   scheduledEvents,
   startIdx,
+  formSubmissionHandler,
+  selectedDay,
+  isShowing,
+  toggle,
 }) => (
   <Grid>
     <div>
@@ -136,6 +167,10 @@ const Calendar = ({
         numberOfDaysInMonth={numberOfDaysInMonth}
         scheduledEvents={scheduledEvents}
         startIdx={startIdx}
+        formSubmissionHandler={formSubmissionHandler}
+        selectedDay={selectedDay}
+        isShowing={isShowing}
+        toggle={toggle}
       />
     </div>
   </Grid>

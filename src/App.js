@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { AppContainer } from './styles';
 import Calendar from './components/calendar';
-import Modal from './components/modal';
-import useModal from './components/modal/useModal';
+// import Modal from './components/modal';
+import usePopup from './components/popup/usePopup';
 import Form from './components/form';
 import { getNumberOfDaysInMonth } from './helpers';
 
@@ -41,7 +41,7 @@ function App() {
     .startOf('month')
     .day();
 
-  const { isShowing, toggle } = useModal();
+  const { isShowing, toggle } = usePopup();
   const clickScheduleEventHandler = n => {
     const currentDateStr = moment(currentDate).format('YYYY-MM-DD');
     const partialDate = currentDateStr.split('-').slice(0, 2).join('-');
@@ -69,13 +69,17 @@ function App() {
         numberOfDaysInMonth={numberOfDaysInMonth}
         scheduledEvents={scheduledEvents}
         startIdx={startIdx}
+        formSubmissionHandler={formSubmissionHandler}
+        selectedDay={selectedDay}
+        isShowing={isShowing}
+        toggle={toggle}
       />
-      <Modal isShowing={isShowing} hide={toggle}>
+      {/*<Modal isShowing={isShowing} hide={toggle}>
         <Form
           formSubmissionHandler={formSubmissionHandler}
           selectedDay={selectedDay}
         />
-      </Modal>
+      </Modal>*/}
     </AppContainer>
   );
 }

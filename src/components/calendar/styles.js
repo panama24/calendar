@@ -16,6 +16,7 @@ const GREY = '#E8E8E8';
 const DARK_GREY = '#696969';
 
 const Day = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column
   align-items: center;
