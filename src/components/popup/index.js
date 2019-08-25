@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import {
   Body,
@@ -8,7 +7,7 @@ import {
   PopupContainer,
 } from './styles';
 
-const Popup = ({ children, hide, isShowing }) => isShowing ? ReactDOM.createPortal(
+const Popup = ({ children, hide, id, isShowing }) => isShowing ? (
   <PopupContainer>
     <Body>
       <CloseWrapper>
@@ -18,7 +17,7 @@ const Popup = ({ children, hide, isShowing }) => isShowing ? ReactDOM.createPort
       </CloseWrapper>
       {children}
     </Body>
-  </PopupContainer>, document.body
+  </PopupContainer>
 ) : null;
 
 export default Popup;

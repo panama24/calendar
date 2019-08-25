@@ -89,18 +89,16 @@ const DayContainer = ({
   const events = getDailyEvents(scheduledEvents, formatDate);
 
   return (
-    <>
-      <Day onClick={() => { day ?  clickScheduleEventHandler(day) : noop()}}>
-        {renderNumber(day, today)}
-        {renderEvents(events)}
-      </Day>
+    <Day onClick={() => { day ?  clickScheduleEventHandler(day) : noop()}}>
+      {renderNumber(day, today)}
+      {renderEvents(events)}
       <Popup isShowing={isShowing} hide={toggle}>
         <Form
           formSubmissionHandler={formSubmissionHandler}
           selectedDay={selectedDay}
         />
       </Popup>
-    </>
+    </Day>
   );
 };
 
