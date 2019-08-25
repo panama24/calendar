@@ -12,25 +12,17 @@ function App() {
   const [scheduledEvents, setScheduledEvents] = useState([]);
 
   useEffect(() => {
-    const firstDay = getFirstDay(currentDate);
-    const numberOfDaysInMonth = getNumberOfDaysInMonth(firstDay);
-    setNumberOfDaysInMonth(numberOfDaysInMonth);
+    const firstDay = moment(currentDate)
+      .startOf('month')
+      .format('YYYY-MM-DD hh:mm');
+    const daysInMonth = getNumberOfDaysInMonth(firstDay);
+    setNumberOfDaysInMonth(daysInMonth);
   }, []);
 
-  const getFirstDay = date => moment(date)
-    .startOf('month')
-    .format('YYYY-MM-DD hh:mm');
-
-  const navigateByMonth = month => {
+  const navigate = month => {
     setCurrentDate(month);
     setNumberOfDaysInMonth(getNumberOfDaysInMonth(month));
   };
-
-  const clickNavigationHandler = (direction) => {
-    direction === 'forward' ?
-      navigateByMonth(moment(currentDate).add(1, 'M')) :
-      navigateByMonth(moment(currentDate).subtract(1, 'M'));
-  }
 
   const startIdx = moment(currentDate)
     .startOf('month')
@@ -48,7 +40,7 @@ function App() {
     toggle();
   };
 
-  const clickTodayHandler = () => setCurrentDate(moment());
+  const getToday = () => setCurrentDate(moment());
 
   const formSubmissionHandler = values => {
     setScheduledEvents([ ...scheduledEvents, { ...values }]);
@@ -58,10 +50,10 @@ function App() {
   return (
     <AppContainer>
       <Calendar
-        clickNavigationHandler={clickNavigationHandler}
         clickScheduleEventHandler={clickScheduleEventHandler}
-        clickTodayHandler={clickTodayHandler}
-        date={currentDate}
+        getToday={getToday}
+        currentDate={currentDate}
+        navigate={navigate}
         numberOfDaysInMonth={numberOfDaysInMonth}
         scheduledEvents={scheduledEvents}
         startIdx={startIdx}

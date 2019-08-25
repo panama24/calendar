@@ -1,42 +1,23 @@
 import React from 'react';
 import moment from 'moment';
+import Header from './header';
 import { generateWeeksArray } from './helpers';
-import Popup from '../popup';
-import Form from '../form';
 import {
   Day,
   Grid,
   Event,
-  HeaderWrapper,
   Number,
   NumberWrapper,
-  StyledNavigation,
   Week,
   Weekday,
   WeekdayHeader,
 } from './styles';
 
-import { Button } from '../shared/button';
+import Popup from '../popup';
+import Form from '../form';
 import { getDailyEvents } from '../../helpers';
 
 const WEEKDAY_SHORTNAMES = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-
-const Header = ({ clickNavigationHandler, clickTodayHandler, date }) => (
-  <HeaderWrapper>
-    <Navigation icon={'<'} onClick={() => clickNavigationHandler('back')} />
-    <Button onClick={() => clickTodayHandler()}>Today</Button>
-    <div>{date.format('MMMM')}</div>
-    <div>{date.format('YYYY')}</div>
-    <Button>Month</Button>
-    <Navigation icon={'>'} onClick={() => clickNavigationHandler('forward')} />
-  </HeaderWrapper>
-);
-
-const Navigation = ({ icon, onClick }) => (
-  <StyledNavigation type='button' onClick={onClick}>
-    {icon}
-  </StyledNavigation>
-);
 
 const DaysOfWeek = () => (
   <WeekdayHeader>
@@ -66,7 +47,8 @@ const Events = ({ events, isShowing, toggle }) => !!events.length &&
     const copy = !!title ? `${title}: ${description}` : '(No title)';
     const eventClickHandler = e => {
       e.stopPropagation();
-      toggle();
+      console.log('click');
+      // toggle();
     };
 
     // can I refactor to use same popover?
@@ -90,7 +72,7 @@ const noop = () => ({});
 const DayContainer = ({
   clickScheduleEventHandler,
   day,
-  date,
+  currentDate,
   scheduledEvents,
   selectedDay,
   formSubmissionHandler,
@@ -99,9 +81,9 @@ const DayContainer = ({
   popupId,
   setId,
 }) => {
-  const today = date.date() === day && moment().isSame(date, 'month');
-  const year = date.year();
-  const month = date.month();
+  const today = currentDate.date() === day && moment().isSame(currentDate, 'month');
+  const year = currentDate.year();
+  const month = currentDate.month();
   const formatMonth = String(month).length > 1 ? month : `0${month}`;
   const formatDay = String(day).length > 1 ? day : `0${day}`;
 
@@ -133,7 +115,7 @@ const DayContainer = ({
 const Weeks = ({
   clickScheduleEventHandler,
   day,
-  date,
+  currentDate,
   formSubmissionHandler,
   isShowing,
   numberOfDaysInMonth,
@@ -152,7 +134,7 @@ const Weeks = ({
             <DayContainer
               clickScheduleEventHandler={clickScheduleEventHandler}
               day={day}
-              date={date}
+              currentDate={currentDate}
               key={dayIdx}
               scheduledEvents={scheduledEvents}
               formSubmissionHandler={formSubmissionHandler}
@@ -170,10 +152,10 @@ const Weeks = ({
 };
 
 const Calendar = ({
-  clickNavigationHandler,
   clickScheduleEventHandler,
-  clickTodayHandler,
-  date,
+  getToday,
+  currentDate,
+  navigate,
   numberOfDaysInMonth,
   scheduledEvents,
   startIdx,
@@ -187,14 +169,14 @@ const Calendar = ({
   <Grid>
     <div>
       <Header
-        clickNavigationHandler={clickNavigationHandler}
-        clickTodayHandler={clickTodayHandler}
-        date={date}
+        navigate={navigate}
+        getToday={getToday}
+        currentDate={currentDate}
       />
       <DaysOfWeek />
       <Weeks
         clickScheduleEventHandler={clickScheduleEventHandler}
-        date={date}
+        currentDate={currentDate}
         numberOfDaysInMonth={numberOfDaysInMonth}
         scheduledEvents={scheduledEvents}
         startIdx={startIdx}
