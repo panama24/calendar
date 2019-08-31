@@ -40,9 +40,7 @@ const Events = ({
       </Event>
       <Popup
         hide={toggle}
-        id={uniquePopupId}
-        isShowing={isShowing}
-        openId={popupId}
+        isOpen={isShowing && (popupId ===  uniquePopupId)}
       >
         <ViewEventBody>
           <Toolbar>
@@ -57,7 +55,7 @@ const Events = ({
             </TextWrapper>
           </EventLockup>
           <EventLockup>
-          <EventIcon />
+            <EventIcon />
             <span>{description}</span>
           </EventLockup>
         </ViewEventBody>

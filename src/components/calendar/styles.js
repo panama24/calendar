@@ -37,6 +37,8 @@ const Event = styled.span`
   width: 96%;
   padding-left: 4px;
   cursor: pointer;
+  text-overflow: clip;
+  overflow: hidden;
 `;
 
 const Grid = styled.div`

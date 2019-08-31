@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { calculatePosition } from './helpers';
 import {
   Body,
   Close,
@@ -12,23 +13,20 @@ const TOP_OFFSET = 36;
 
 const Popup = ({
   children,
-  clientRect,
+  clientRect = {},
   dayIdx: colIdx,
   hide,
-  id,
-  isShowing,
-  openId,
+  isOpen,
 }) => {
-  const { left, right, top, width} = clientRect;
-  const calculatedLeft = (colIdx === 0 || colIdx === 1) ?
-    Math.ceil(right) :
-    // left begins at 1, so alignment is off
-    (Math.ceil((left - 1) - (width + (POPUP_WIDTH / 2))));
+  const { left, top } = calculatePosition({
+    clientRect,
+    colIdx,
+    popupWidth: POPUP_WIDTH,
+    topOffset: TOP_OFFSET,
+  });
 
-  const calculatedTop = Math.floor(top + TOP_OFFSET);
-
-  return isShowing && (openId === id) ?  (
-    <PopupContainer left={calculatedLeft} top={calculatedTop}>
+  return isOpen ?  (
+    <PopupContainer left={left} top={top}>
       <Body>
         <CloseWrapper>
           <Close type="button" onClick={hide}>

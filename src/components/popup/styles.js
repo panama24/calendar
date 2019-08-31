@@ -23,8 +23,8 @@ const PopupContainer = styled.div`
   z-index: 2;
   width: 416px;
   padding: 12px;
-  left: ${({ left }) => `${left}px`};
-  top: ${({ top }) => `${top}px`};
+  left: ${({ left }) => left ? `${left}px` : 0};
+  top: ${({ top }) => top ? `${top}px` : 0};
 `;
 
 const Body = styled.div`

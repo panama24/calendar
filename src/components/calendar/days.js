@@ -14,6 +14,7 @@ const DayNumber = ({ day, today }) => day && (
   </NumberWrapper>
 );
 
+const PlaceholderEvent = () => <div>(No Title)</div>
 const noop = () => ({});
 const DayContainer = ({
   clickableDay,
@@ -49,10 +50,12 @@ const DayContainer = ({
     schedulingEvent(formatDate, uniquePopupId);
   };
 
+  const isScheduling = isShowing && (popupId ===  uniquePopupId);
   return (
     <>
       <Day ref={inputEl} onClick={() => { clickableDay ?  clickHandler() : noop()}}>
         <DayNumber day={clickableDay} today={isToday} />
+        {isScheduling && <PlaceholderEvent /> }
         <Events
           clickableDay={clickableDay}
           events={events}
@@ -65,9 +68,7 @@ const DayContainer = ({
       <Popup
         dayIdx={dayIdx}
         hide={toggle}
-        id={uniquePopupId}
-        isShowing={isShowing}
-        openId={popupId}
+        isOpen={isScheduling}
         clientRect={clientRect}
       >
         <Form
