@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 const PopupContainer = styled.div`
   position: absolute;
-  left: 24px;
-  top: 24px;
+  left: ${({ left }) => `${left}px`};
+  top: ${({ top }) => `${top + 32}px`};
   font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
   font-style: normal;
   font-weight: 400;

@@ -13,8 +13,10 @@ const Popup = ({
   hide,
   id,
   isShowing,
+  top,
+  left,
 }) => isShowing && (openId === id) ?  (
-  <PopupContainer>
+  <PopupContainer top={top} left={left}>
     <Body>
       <CloseWrapper>
         <Close type="button" onClick={hide}>

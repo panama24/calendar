@@ -99,7 +99,6 @@ const StyledNavigation = styled.button`
 `;
 
 const Week = styled.div`
-  position: relative;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-auto-flow: dense;

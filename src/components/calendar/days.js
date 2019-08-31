@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import moment from 'moment';
 import Events from './events';
 import { Day, Number, NumberWrapper } from './styles';
@@ -28,6 +28,9 @@ const DayContainer = ({
   toggle,
   viewingEvent,
 }) => {
+  const [coords, setCoords] = useState({ top: 0, left: 0 });
+  const inputEl = useRef(null);
+
   const isToday = currentDate.date() === clickableDay && moment().isSame(currentDate, 'month');
   const year = currentDate.year();
   const month = currentDate.month();
@@ -37,11 +40,17 @@ const DayContainer = ({
   const formatDate = moment(dateStr, 'YYYY-MM-DD').add(1, 'month')
 
   const events = getDailyEvents(scheduledEvents, formatDate);
-
   const uniquePopupId = `schedule-event-${clickableDay}`;
+
+  const clickHandler = () => {
+    const { left, top } = inputEl.current.getBoundingClientRect();
+    setCoords({ top: Math.floor(top), left: Math.floor(left) });
+    schedulingEvent(formatDate, uniquePopupId);
+  };
+
   return (
     <>
-      <Day onClick={() => { clickableDay ?  schedulingEvent(formatDate, uniquePopupId) : noop()}}>
+      <Day ref={inputEl} onClick={() => { clickableDay ?  clickHandler() : noop()}}>
         <DayNumber day={clickableDay} today={isToday} />
         <Events
           clickableDay={clickableDay}
@@ -57,6 +66,8 @@ const DayContainer = ({
         id={uniquePopupId}
         isShowing={isShowing}
         openId={popupId}
+        top={coords.top}
+        left={coords.left}
       >
         <Form
           formSubmissionHandler={formSubmissionHandler}
