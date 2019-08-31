@@ -36,6 +36,7 @@ const Calendar = ({
                 clickableDay={clickableDay}
                 currentDate={currentDate}
                 formSubmissionHandler={formSubmissionHandler}
+                dayIdx={dayIdx}
                 isShowing={isShowing}
                 key={dayIdx}
                 popupId={popupId}

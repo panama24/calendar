@@ -19,6 +19,7 @@ const DayContainer = ({
   clickableDay,
   currentDate,
   formSubmissionHandler,
+  dayIdx,
   isShowing,
   popupId,
   schedulingEvent,
@@ -62,6 +63,7 @@ const DayContainer = ({
         />
       </Day>
       <Popup
+        dayIdx={dayIdx}
         hide={toggle}
         id={uniquePopupId}
         isShowing={isShowing}
