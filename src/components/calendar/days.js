@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import moment from 'moment';
-import Events from './events';
-import { Day, Number, NumberWrapper } from './styles';
+import { PlaceholderEvent, ScheduledEvents } from './events';
+import { Day, Event, Number, NumberWrapper } from './styles';
 import Form from '../form';
 import Popup from '../popup';
 import { getDailyEvents } from '../../helpers';
@@ -14,7 +14,6 @@ const DayNumber = ({ day, today }) => day && (
   </NumberWrapper>
 );
 
-const PlaceholderEvent = () => <div>(No Title)</div>
 const noop = () => ({});
 const DayContainer = ({
   clickableDay,
@@ -28,6 +27,8 @@ const DayContainer = ({
   selectedDay,
   setId,
   toggle,
+  toggleEventAction,
+  togglingEventAction,
   viewingEvent,
 }) => {
   const [clientRect, setClientRect] = useState({});
@@ -55,13 +56,14 @@ const DayContainer = ({
     <>
       <Day ref={inputEl} onClick={() => { clickableDay ?  clickHandler() : noop()}}>
         <DayNumber day={clickableDay} today={isToday} />
-        {isScheduling && <PlaceholderEvent /> }
-        <Events
+        {isScheduling && <PlaceholderEvent toggleEventAction={toggleEventAction} /> }
+        <ScheduledEvents
           clickableDay={clickableDay}
           events={events}
           isShowing={isShowing}
           popupId={popupId}
           toggle={toggle}
+          toggleEventAction={toggleEventAction}
           viewingEvent={viewingEvent}
         />
       </Day>
@@ -74,6 +76,7 @@ const DayContainer = ({
         <Form
           formSubmissionHandler={formSubmissionHandler}
             selectedDay={selectedDay}
+            togglingEventAction={togglingEventAction}
           />
       </Popup>
     </>

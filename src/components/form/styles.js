@@ -62,6 +62,30 @@ const Description = styled.input`
   }
 `;
 
+const ActionButton = styled.div`
+  border-radius: 3px;
+  font-size: 14px;
+  padding: 8px 6px;
+  margin-bottom: 0;
+  margin-left: 8px;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background: #eee;
+    border-radius: 3px;
+    padding: 8px 6px;
+    cursor: pointer;
+  }
+`;
+
+const ActionsWrapper = styled.div`
+  display: flex;
+  margin-bottom: 18px;
+`;
+
 const DateInput = styled(Description)`
   border: none;
   font-size: 12px;
@@ -94,6 +118,8 @@ const Time = styled(DateInput)`
 `;
 
 export {
+  ActionButton,
+  ActionsWrapper,
   AddTimeWrapper,
   DateInput,
   Description,

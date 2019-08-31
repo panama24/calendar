@@ -30,8 +30,9 @@ const Event = styled.span`
   align-items: center;
   font-size: 10px;
   font-weight: bold;
-  color: #F3BF16;
-  border: 1px solid #F3BF16;
+  color: ${({ color }) => color ? color : DARK_GREY};
+  background: ${({ bgColor }) => bgColor};
+  box-shadow: ${({ boxShadow }) => boxShadow ? boxShadow : 'none'};
   border-radius: 2px;
   height: 18px;
   width: 96%;
@@ -39,6 +40,11 @@ const Event = styled.span`
   cursor: pointer;
   text-overflow: clip;
   overflow: hidden;
+  margin-bottom: 2px;
+
+  &:hover {
+    background: ${({ hoverBg }) => hoverBg};
+  }
 `;
 
 const Grid = styled.div`
@@ -177,10 +183,10 @@ const ViewEventBody = styled.div`
 `;
 
 const EventIcon = styled.span`
-  height: 16px;
-  width: 16px;
+  height: ${({ size }) => size ? size : '10px'};
+  width: ${({ size }) => size ? size : '10px'};
   background-color: dodgerBlue;
-  border-radius: 24%;
+  border-radius: ${({ radius }) => radius ? radius : '50%'};
   display: inline-block;
   margin-right: 8px;
 `;

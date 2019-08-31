@@ -10,6 +10,7 @@ function App() {
   const [numberOfDaysInMonth, setNumberOfDaysInMonth] = useState(0);
   const [selectedDay, setSelectedDay] = useState('');
   const [scheduledEvents, setScheduledEvents] = useState([]);
+  const [toggleEventAction, setToggleEventAction] = useState({});
 
   useEffect(() => {
     const firstDay = moment(currentDate)
@@ -44,6 +45,8 @@ function App() {
 
   const getToday = () => setCurrentDate(moment());
 
+  const togglingEventAction = (actionObj) => setToggleEventAction({ ...Object.assign(toggleEventAction, {...actionObj}) });
+
   const formSubmissionHandler = values => {
     setScheduledEvents([ ...scheduledEvents, { ...values }]);
     toggle();
@@ -65,6 +68,8 @@ function App() {
         setId={setId}
         startIdx={startIdx}
         toggle={toggle}
+        toggleEventAction={toggleEventAction}
+        togglingEventAction={togglingEventAction}
         viewingEvent={viewingEvent}
       />
     </AppContainer>

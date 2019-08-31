@@ -19,6 +19,8 @@ const Calendar = ({
   setId,
   startIdx,
   toggle,
+  toggleEventAction,
+  togglingEventAction,
   viewingEvent,
 }) => (
   <Grid>
@@ -45,6 +47,8 @@ const Calendar = ({
                 selectedDay={selectedDay}
                 setId={setId}
                 toggle={toggle}
+                toggleEventAction={toggleEventAction}
+                togglingEventAction={togglingEventAction}
                 viewingEvent={viewingEvent}
               />
             ))}

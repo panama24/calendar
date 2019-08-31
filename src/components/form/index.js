@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import moment from 'moment';
 
 import {
+  ActionButton,
+  ActionsWrapper,
   AddTimeWrapper,
   DateInput,
   Description,
@@ -45,7 +47,7 @@ const TimeInputs = ({
   <>-</>
 );
 
-const Form = ({ formSubmissionHandler, selectedDay }) => {
+const Form = ({ formSubmissionHandler, selectedDay, togglingEventAction }) => {
   const [formValues, setFormValues] = useState({
       title: '',
       description: '',
@@ -59,6 +61,7 @@ const Form = ({ formSubmissionHandler, selectedDay }) => {
 
   const handleTimeSelect = () => {
     const { end, start } = getNearestStartEndTimes();
+    togglingEventAction({ end, start })
     setFormValues({
       ...formValues,
       startTime: start,
@@ -77,12 +80,33 @@ const Form = ({ formSubmissionHandler, selectedDay }) => {
         <TitleWrapper>
           <Title
             name="title"
+            onBlur={e => togglingEventAction({ [e.target.name]: e.target.value })}
             onChange={handleInputChange}
             placeholder='Add title and time'
             type="text"
             value={formValues.title}
           />
         </TitleWrapper>
+        <ActionsWrapper>
+          <ActionButton
+            onClick={() => alert('ehreh')}
+            value={formValues.description}
+          >
+            Event
+          </ActionButton>
+          <ActionButton
+            onClick={() => alert('ehreh')}
+            value={formValues.description}
+          >
+            Reminder
+          </ActionButton>
+          <ActionButton
+            onClick={() => alert('ehreh')}
+            value={formValues.description}
+          >
+            Task
+          </ActionButton>
+        </ActionsWrapper>
         <div>
           <AddTimeWrapper>
             <div>

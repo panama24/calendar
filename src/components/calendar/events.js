@@ -10,12 +10,25 @@ import {
 } from './styles';
 import Popup from '../popup';
 
-const Events = ({
+const PlaceholderEvent = ({ toggleEventAction }) => {
+  console.log(toggleEventAction);
+  const styles = {};
+  return (
+    <Event {...styles}>
+      {toggleEventAction.type === 'time' && <EventIcon size='10px' />}
+      {toggleEventAction.start || ''}
+      {toggleEventAction.title || '(No Title)'}
+    </Event>
+  );
+};
+
+const ScheduledEvents = ({
   clickableDay,
   events,
   isShowing,
   popupId,
   toggle,
+  toggleEventAction,
   viewingEvent,
 }) => !!events.length && events.map(({
   description,
@@ -48,14 +61,14 @@ const Events = ({
             <Action>delete</Action>
           </Toolbar>
           <EventLockup>
-            <EventIcon />
+            <EventIcon size='18px' radius='24%' />
             <TextWrapper>
               <span>{title}</span>
               <span>{`${startDate}-${endDate}`} - {`${startTime}-${endTime}`}</span>
             </TextWrapper>
           </EventLockup>
           <EventLockup>
-            <EventIcon />
+            <EventIcon size='18px' radius='24%' />
             <span>{description}</span>
           </EventLockup>
         </ViewEventBody>
@@ -64,4 +77,7 @@ const Events = ({
   )}
 );
 
-export default Events;
+export {
+  PlaceholderEvent,
+  ScheduledEvents,
+};
