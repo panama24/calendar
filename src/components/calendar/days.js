@@ -28,7 +28,7 @@ const DayContainer = ({
   toggle,
   viewingEvent,
 }) => {
-  const [coords, setCoords] = useState({ top: 0, left: 0 });
+  const [clientRect, setClientRect] = useState({});
   const inputEl = useRef(null);
 
   const isToday = currentDate.date() === clickableDay && moment().isSame(currentDate, 'month');
@@ -43,8 +43,8 @@ const DayContainer = ({
   const uniquePopupId = `schedule-event-${clickableDay}`;
 
   const clickHandler = () => {
-    const { left, top } = inputEl.current.getBoundingClientRect();
-    setCoords({ top: Math.floor(top), left: Math.floor(left) });
+    const clientRectObj = inputEl.current.getBoundingClientRect();
+    setClientRect(clientRectObj);
     schedulingEvent(formatDate, uniquePopupId);
   };
 
@@ -66,8 +66,7 @@ const DayContainer = ({
         id={uniquePopupId}
         isShowing={isShowing}
         openId={popupId}
-        top={coords.top}
-        left={coords.left}
+        clientRect={clientRect}
       >
         <Form
           formSubmissionHandler={formSubmissionHandler}

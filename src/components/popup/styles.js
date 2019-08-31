@@ -2,8 +2,6 @@ import styled from 'styled-components';
 
 const PopupContainer = styled.div`
   position: absolute;
-  left: ${({ left }) => `${left}px`};
-  top: ${({ top }) => `${top + 32}px`};
   font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -25,6 +23,8 @@ const PopupContainer = styled.div`
   z-index: 2;
   width: 416px;
   padding: 12px;
+  left: ${({ left }) => `${left}px`};
+  top: ${({ top }) => `${top}px`};
 `;
 
 const Body = styled.div`
