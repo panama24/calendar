@@ -70,9 +70,6 @@ const ScheduledEvents = ({
   startTime,
   title
 }) => {
-  const copy = !!title ? `${title}: ${description}` : '(No title)';
-  const uniquePopupId = `view-event-${clickableDay}`;
-
   const eventClickHandler = e => {
     e.stopPropagation();
     viewingEvent(uniquePopupId);
@@ -86,10 +83,20 @@ const ScheduledEvents = ({
     hoverColor: startTime ? DARK_GREY : LIGHT_GREY,
   };
 
+  const uniquePopupId = `view-event-${clickableDay}`;
+
   return (
     <>
-      <Event {...styles} key={uniquePopupId} onClick={e => eventClickHandler(e)}>
-        {copy}
+        <Event {...styles} key={uniquePopupId} onClick={e => eventClickHandler(e)}>
+        {startTime ? (
+          <span>
+            <EventIcon size='10px' color={colors.event} />
+            <TextWrapper>{startTime}</TextWrapper>
+            {title || ''}
+          </span>
+        ) : (
+          <span>{title || '(No Title)'}</span>
+        )}
       </Event>
       <Popup
         hide={toggle}
