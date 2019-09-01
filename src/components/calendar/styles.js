@@ -189,12 +189,13 @@ const EventIcon = styled.span`
   background-color: ${({ color }) => color};
   border-radius: ${({ radius }) => radius ? radius : '50%'};
   display: inline-block;
-  margin-right: 8px;
+  margin: ${({ margin }) => margin && margin};
 `
 
 const EventLockup = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  margin-top: 8px;
 `;
 
 const TextWrapper = styled.span`

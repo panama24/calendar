@@ -103,7 +103,7 @@ const ScheduledEvents = ({
           <span>
             <EventIcon size='10px' color={colors.event} />
             <TextWrapper>{startTime}</TextWrapper>
-            {title || ''}
+            {title || '(No Title)'}
           </span>
         ) : (
           <span>{title || '(No Title)'}</span>
@@ -122,15 +122,16 @@ const ScheduledEvents = ({
             <div>
               <EventLockup>
                 <IconWrapper>
-                  <EventIcon size='14px' color={colors.event} radius='25%' />
+                  <EventIcon size='14px' color={colors.event} radius='25%' margin='16px 8px 0px 0px' />
                 </IconWrapper>
-                <TextWrapper fontSize='24px'>{title}</TextWrapper>
-              </EventLockup>
-              <EventLockup>
-                <IconWrapper>
-                  <EventIcon size='14px' color={colors.event} radius='25%' />
-                </IconWrapper>
-                <TextWrapper fontSize='14px'>{`${startDate}-${endDate}`} - {`${startTime}-${endTime}`}</TextWrapper>
+                <div>
+                  <div>
+                    <TextWrapper fontSize='24px'>{title || '(No Title)'}</TextWrapper>
+                  </div>
+                  <div>
+                    <TextWrapper fontSize='14px'>{`${startDate}-${endDate}`} - {`${startTime}-${endTime}`}</TextWrapper>
+                  </div>
+                </div>
               </EventLockup>
             </div>
           </EventLockup>
