@@ -4,6 +4,7 @@ import {
   Event,
   EventIcon,
   EventLockup,
+  IconWrapper,
   TextWrapper,
   Toolbar,
   ViewEventBody,
@@ -70,7 +71,7 @@ const ScheduledEvents = ({
   startTime,
   title
 }) => {
-  const eventClickHandler = e => {
+  const eventClickHandler = (e, action) => {
     e.stopPropagation();
     viewingEvent(uniquePopupId);
   };
@@ -85,9 +86,19 @@ const ScheduledEvents = ({
 
   const uniquePopupId = `view-event-${clickableDay}`;
 
+  const editClickHandler = e => {
+    e.stopPropagation();
+    console.log('edit');
+  };
+
+  const deleteClickHandler = e => {
+    e.stopPropagation();
+    console.log('delete');
+  };
+
   return (
     <>
-        <Event {...styles} key={uniquePopupId} onClick={e => eventClickHandler(e)}>
+      <Event {...styles} key={uniquePopupId} onClick={e => eventClickHandler(e)}>
         {startTime ? (
           <span>
             <EventIcon size='10px' color={colors.event} />
@@ -104,18 +115,29 @@ const ScheduledEvents = ({
       >
         <ViewEventBody>
           <Toolbar>
-            <Action>edit</Action>
-            <Action>delete</Action>
+            <Action onClick={e => editClickHandler(e)}>edit</Action>
+            <Action onClick={e => deleteClickHandler(e)}>delete</Action>
           </Toolbar>
           <EventLockup>
-            <EventIcon size='18px' radius='24%' />
-            <TextWrapper>
-              <span>{title}</span>
-              <span>{`${startDate}-${endDate}`} - {`${startTime}-${endTime}`}</span>
-            </TextWrapper>
+            <div>
+              <EventLockup>
+                <IconWrapper>
+                  <EventIcon size='14px' color={colors.event} radius='25%' />
+                </IconWrapper>
+                <TextWrapper fontSize='24px'>{title}</TextWrapper>
+              </EventLockup>
+              <EventLockup>
+                <IconWrapper>
+                  <EventIcon size='14px' color={colors.event} radius='25%' />
+                </IconWrapper>
+                <TextWrapper fontSize='14px'>{`${startDate}-${endDate}`} - {`${startTime}-${endTime}`}</TextWrapper>
+              </EventLockup>
+            </div>
           </EventLockup>
           <EventLockup>
-            <EventIcon size='18px' radius='24%' />
+            <IconWrapper>
+              <EventIcon size='14px' color={colors.event} radius='25%' />
+            </IconWrapper>
             <span>{description}</span>
           </EventLockup>
         </ViewEventBody>

@@ -194,11 +194,15 @@ const EventIcon = styled.span`
 
 const EventLockup = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
 `;
 
 const TextWrapper = styled.span`
   margin-right: 8px;
+  font-size: ${({ fontSize }) => fontSize ? fontSize : '12px'};
+`;
+
+const IconWrapper = styled.div`
 `;
 
 export {
@@ -209,6 +213,7 @@ export {
   EventLockup,
   Grid,
   HeaderWrapper,
+  IconWrapper,
   Number,
   NumberWrapper,
   StyledNavigation,
