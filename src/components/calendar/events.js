@@ -41,7 +41,7 @@ const PlaceholderEvent = ({ toggleEventAction }) => {
   };
 
   return (
-    <Event {...styles}>
+    <Event {...styles} onClick={e => e.stopPropagation()}>
       {startTime ? (
         <span>
           <EventIcon size='10px' color={colors[eventType]} />
