@@ -10,7 +10,7 @@ function App() {
   const [numberOfDaysInMonth, setNumberOfDaysInMonth] = useState(0);
   const [selectedDay, setSelectedDay] = useState('');
   const [scheduledEvents, setScheduledEvents] = useState([]);
-  const [toggleEventAction, setToggleEventAction] = useState({});
+  const [toggleEventAction, setToggleEventAction] = useState({ type: 'event' });
 
   useEffect(() => {
     const firstDay = moment(currentDate)

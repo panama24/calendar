@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import moment from 'moment';
 import { PlaceholderEvent, ScheduledEvents } from './events';
-import { Day, Event, Number, NumberWrapper } from './styles';
+import { Day, Number, NumberWrapper } from './styles';
 import Form from '../form';
 import Popup from '../popup';
 import { getDailyEvents } from '../../helpers';

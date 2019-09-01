@@ -10,14 +10,46 @@ import {
 } from './styles';
 import Popup from '../popup';
 
+const DARK_GREY = '#696969';
+const LIGHT_GREY = 'WhiteSmoke';
+const WHITE = '#FFFFFF';
+
 const PlaceholderEvent = ({ toggleEventAction }) => {
-  console.log(toggleEventAction);
-  const styles = {};
+  const title = toggleEventAction.title;
+  const startTime = toggleEventAction.start;
+  const eventType = toggleEventAction.type;
+
+  const colors = {
+    event: 'dodgerBlue',
+    reminder: '#3333FF',
+    task: '#33CCFF',
+  };
+
+  const hoverColors = {
+    event: '#1476d4',
+    reminder: '#4D4DFF',
+    task: '#00BFFF',
+  };
+
+  const styles = {
+    bgColor: startTime ? WHITE : colors[eventType],
+    color: startTime ? DARK_GREY : WHITE,
+    boxShadow: startTime ? '0 3px 7px rgba(0, 0, 0, 0.3)' : 'none',
+    hoverBgColor: startTime ? LIGHT_GREY : hoverColors[eventType],
+    hoverColor: startTime ? DARK_GREY : LIGHT_GREY,
+  };
+
   return (
     <Event {...styles}>
-      {toggleEventAction.type === 'time' && <EventIcon size='10px' />}
-      {toggleEventAction.start || ''}
-      {toggleEventAction.title || '(No Title)'}
+      {startTime ? (
+        <span>
+          <EventIcon size='10px' color={colors[eventType]} />
+          <TextWrapper>{startTime}</TextWrapper>
+          {title || ''}
+        </span>
+      ) : (
+        <span>{'(No Title)'}</span>
+      )}
     </Event>
   );
 };

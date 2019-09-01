@@ -30,9 +30,6 @@ const Event = styled.span`
   align-items: center;
   font-size: 10px;
   font-weight: bold;
-  color: ${({ color }) => color ? color : DARK_GREY};
-  background: ${({ bgColor }) => bgColor};
-  box-shadow: ${({ boxShadow }) => boxShadow ? boxShadow : 'none'};
   border-radius: 2px;
   height: 18px;
   width: 96%;
@@ -41,9 +38,13 @@ const Event = styled.span`
   text-overflow: clip;
   overflow: hidden;
   margin-bottom: 2px;
+  box-shadow: ${({ boxShadow }) => boxShadow};
+  background: ${({ bgColor }) => bgColor};
+  color: ${({ color }) => color};
 
   &:hover {
-    background: ${({ hoverBg }) => hoverBg};
+    background: ${({ hoverBgColor }) => hoverBgColor};
+    color: ${({ hoverColor }) => hoverColor};
   }
 `;
 
@@ -185,18 +186,19 @@ const ViewEventBody = styled.div`
 const EventIcon = styled.span`
   height: ${({ size }) => size ? size : '10px'};
   width: ${({ size }) => size ? size : '10px'};
-  background-color: dodgerBlue;
+  background-color: ${({ color }) => color};
   border-radius: ${({ radius }) => radius ? radius : '50%'};
   display: inline-block;
   margin-right: 8px;
-`;
+`
 
 const EventLockup = styled.div`
   display: flex;
   align-items: flex-start;
 `;
 
-const TextWrapper = styled.div`
+const TextWrapper = styled.span`
+  margin-right: 8px;
 `;
 
 export {

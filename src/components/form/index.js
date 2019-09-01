@@ -88,22 +88,13 @@ const Form = ({ formSubmissionHandler, selectedDay, togglingEventAction }) => {
           />
         </TitleWrapper>
         <ActionsWrapper>
-          <ActionButton
-            onClick={() => alert('ehreh')}
-            value={formValues.description}
-          >
+          <ActionButton onClick={() => togglingEventAction({ type: 'event' })}>
             Event
           </ActionButton>
-          <ActionButton
-            onClick={() => alert('ehreh')}
-            value={formValues.description}
-          >
+          <ActionButton onClick={() => togglingEventAction({ type: 'reminder' })}>
             Reminder
           </ActionButton>
-          <ActionButton
-            onClick={() => alert('ehreh')}
-            value={formValues.description}
-          >
+          <ActionButton onClick={() => togglingEventAction({ type: 'task' })}>
             Task
           </ActionButton>
         </ActionsWrapper>
