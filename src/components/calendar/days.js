@@ -16,6 +16,7 @@ const DayNumber = ({ day, today }) => day && (
 
 const noop = () => ({});
 const DayContainer = ({
+  clearFormValues,
   clickableDay,
   currentDate,
   formSubmissionHandler,
@@ -75,9 +76,10 @@ const DayContainer = ({
       >
         <Form
           formSubmissionHandler={formSubmissionHandler}
-            selectedDay={selectedDay}
-            togglingEventAction={togglingEventAction}
-          />
+          clearFormValues={clearFormValues}
+          selectedDay={selectedDay}
+          togglingEventAction={togglingEventAction}
+        />
       </Popup>
     </>
   );

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+import assign from 'lodash/assign';
+import keys from 'lodash/keys';
 import { AppContainer } from './styles';
 import Calendar from './components/calendar';
 import usePopup from './components/popup/usePopup';
@@ -45,7 +47,12 @@ function App() {
 
   const getToday = () => setCurrentDate(moment());
 
-  const togglingEventAction = (actionObj) => setToggleEventAction({ ...Object.assign(toggleEventAction, {...actionObj}) });
+  const togglingEventAction = (actionObj) => setToggleEventAction({ ...assign(toggleEventAction, {...actionObj}) });
+
+  const clearFormValues = () => {
+    const newObj = keys(toggleEventAction).forEach(i => { toggleEventAction[i] = '' });
+    setToggleEventAction({ ...newObj, type: 'event' });
+  }
 
   const formSubmissionHandler = values => {
     setScheduledEvents([ ...scheduledEvents, { ...values }]);
@@ -55,6 +62,7 @@ function App() {
   return (
     <AppContainer>
       <Calendar
+        clearFormValues={clearFormValues}
         currentDate={currentDate}
         formSubmissionHandler={formSubmissionHandler}
         getToday={getToday}

@@ -6,6 +6,7 @@ import { generateWeeksArray } from './helpers';
 import { Grid, Week } from './styles';
 
 const Calendar = ({
+  clearFormValues,
   currentDate,
   formSubmissionHandler,
   getToday,
@@ -35,6 +36,7 @@ const Calendar = ({
           <Week key={weekIdx}>
             {week.map((clickableDay, dayIdx) => (
               <DayContainer
+                clearFormValues={clearFormValues}
                 clickableDay={clickableDay}
                 currentDate={currentDate}
                 formSubmissionHandler={formSubmissionHandler}

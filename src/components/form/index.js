@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 
 import {
@@ -47,17 +47,23 @@ const TimeInputs = ({
   <>-</>
 );
 
-const Form = ({ formSubmissionHandler, selectedDay, togglingEventAction }) => {
-  const [formValues, setFormValues] = useState({
-      title: '',
-      description: '',
-      startDate: formatDate(selectedDay),
-      endDate: formatDate(selectedDay),
-      startTime: '',
-      endTime: ''
-  });
+const initialState = selectedDay => ({
+  title: '',
+  description: '',
+  startDate: formatDate(selectedDay),
+  endDate: formatDate(selectedDay),
+  startTime: '',
+  endTime: ''
+});
+
+const Form = ({ clearFormValues, formSubmissionHandler, selectedDay, togglingEventAction }) => {
+  const [formValues, setFormValues] = useState(initialState(selectedDay));
 
   const formattedDate = formatDate(selectedDay);
+
+  useEffect(() => {
+    return () => clearFormValues();
+  }, []);
 
   const handleTimeSelect = () => {
     const { end, start } = getNearestStartEndTimes();
