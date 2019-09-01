@@ -27,10 +27,8 @@ const hoverColors = {
   task: '#00BFFF',
 };
 
-const PlaceholderEvent = ({ toggleEventAction }) => {
-  const title = toggleEventAction.title;
-  const startTime = toggleEventAction.start;
-  const eventType = toggleEventAction.type;
+const PlaceholderEvent = ({ eventAction }) => {
+  const { title, start: startTime, type: eventType } = eventAction;
 
   const styles = {
     bgColor: startTime ? WHITE : colors[eventType],
@@ -61,7 +59,7 @@ const ScheduledEvents = ({
   isShowing,
   popupId,
   toggle,
-  toggleEventAction,
+  eventAction,
   viewingEvent,
 }) => !!events.length && events.map(({
   description,
@@ -102,7 +100,7 @@ const ScheduledEvents = ({
         {startTime ? (
           <span>
             <EventIcon size='10px' color={colors.event} />
-            <TextWrapper>{startTime}</TextWrapper>
+            <TextWrapper margin='0 8px 0 0'>{startTime}</TextWrapper>
             {title || '(No Title)'}
           </span>
         ) : (
@@ -122,7 +120,12 @@ const ScheduledEvents = ({
             <div>
               <EventLockup>
                 <IconWrapper>
-                  <EventIcon size='14px' color={colors.event} radius='25%' margin='16px 8px 0px 0px' />
+                  <EventIcon
+                    size='14px'
+                    color={colors.event}
+                    radius='25%'
+                    margin='16px 8px 0px 0px'
+                  />
                 </IconWrapper>
                 <div>
                   <div>
@@ -137,7 +140,11 @@ const ScheduledEvents = ({
           </EventLockup>
           <EventLockup>
             <IconWrapper>
-              <EventIcon size='14px' color={colors.event} radius='25%' />
+              <EventIcon
+                size='14px'
+                color={colors.event}
+                radius='25%'
+              />
             </IconWrapper>
             <span>{description}</span>
           </EventLockup>

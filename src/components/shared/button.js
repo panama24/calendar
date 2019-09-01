@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { DARK_GREY, GREY, HOVER_GREY, WHITE } from '../../constants/colors';
 
 const Button = styled.a`
   cursor: pointer;
@@ -10,13 +11,13 @@ const Button = styled.a`
   height: 8px;
   font-size: 10px;
   font-weight: bold;
-  color: grey;
-  border: 1px solid #ccc;
-  background: white;
+  color: ${DARK_GREY};
+  border: 1px solid ${GREY};
+  background: ${WHITE};
   padding: 0.5rem 0;
 
   &:hover {
-    background: #eee;
+    background: ${HOVER_GREY};
   }
 `;
 

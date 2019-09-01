@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { DARK_GREY, GREY, HOVER_GREY, PRIMARY_BLUE, WHITE } from '../../constants/colors';
 
 const size = {
   small: '320px',
@@ -11,9 +12,6 @@ const device = {
   medium: `(min-width: ${size.medium})`,
   large: `(min-width: ${size.large})`,
 };
-
-const GREY = '#E8E8E8';
-const DARK_GREY = '#696969';
 
 const Day = styled.div`
   position: relative;
@@ -48,6 +46,38 @@ const Event = styled.span`
   }
 `;
 
+const Flex = styled.div`
+  display: flex;
+  align-items: ${({ alignItems }) => alignItems};
+  justify-content: ${({ justifyContent }) => justifyContent};
+  flex-basis: ${({ flexBasis }) => flexBasis};
+`;
+
+const MonthButtonWrapper = styled.div`
+  display: flex;
+  flex-basis: 66.6%;
+  justify-content: flex-end;
+`;
+
+const MonthYrLockup = styled.div`
+  display: flex;
+  align-items: center;
+  width: 190px;
+  border-radius: 3px;
+  padding: 0 8px;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background: ${HOVER_GREY};
+    border-radius: 3px;
+    padding: 0 8px;
+    cursor: pointer;
+  }
+`;
+
 const Grid = styled.div`
   color: ${DARK_GREY};
   display: grid;
@@ -56,14 +86,10 @@ const Grid = styled.div`
 `;
 
 const HeaderWrapper = styled.div`
-  display: grid;
-  grid-auto-flow: column;
-  grid-column-start: 1;
-  grid-column-end: 8;
-  justify-content: space-between;
+  display: flex;
   align-items: center;
   padding: 12px;
-  color: #3c4043;
+  color: ${DARK_GREY};
   font-family: 'Google Sans',Roboto,Arial,sans-serif;
   font-size: 22px;
   font-weight: 400;
@@ -83,11 +109,11 @@ const Number = styled.span`
   width: 24px;
   line-height: 24px;
   border-radius: 30px;
-  background: ${({ today }) => today ? 'dodgerBlue' : 'white'};
-  color: ${({ today }) => today ? "white" : DARK_GREY};
+  background: ${({ today }) => today ? PRIMARY_BLUE : WHITE};
+  color: ${({ today }) => today ?  WHITE : DARK_GREY};
 
   &:hover {
-    background: ${({ today }) => today ? 'dodgerBlue' : '#eee'};
+    background: ${({ today }) => today ? PRIMARY_BLUE : HOVER_GREY};
   }
 `;
 
@@ -101,6 +127,7 @@ const StyledNavigation = styled.button`
   color: ${DARK_GREY};
   cursor: pointer;
   font-size: 24px;
+  margin: ${({ margin }) => margin && margin};
 
   &:focus {
     outline: none;
@@ -133,7 +160,7 @@ const Weekdays = styled.div`
   padding: 8px 0;
   border-top: 1px solid ${GREY};
   border-botton: 1px solid ${GREY};
-  color: #70757a;
+  color: ${DARK_GREY};
   font-size: 11px;
   font-weight: 500;
   line-height: 20px;
@@ -158,7 +185,7 @@ const TooltipWrapper = styled.div`
   word-wrap: normal;
   font-size: 12px;
   display: inline-block;
-  background: white;
+  background: ${WHITE};
   border-radius: 5px;
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.3);
   z-index: 2;
@@ -199,22 +226,51 @@ const EventLockup = styled.div`
 `;
 
 const TextWrapper = styled.span`
-  margin-right: 8px;
+  margin: ${({ margin }) => margin ? margin : '0'};
   font-size: ${({ fontSize }) => fontSize ? fontSize : '12px'};
 `;
 
 const IconWrapper = styled.div`
 `;
 
+const ArrowDown = styled.div`
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid ${DARK_GREY};
+  margin-left: 12px;
+`;
+
+const ArrowLeft = styled.div`
+  border: solid ${DARK_GREY};
+  border-width: 0 2px 2px 0;
+  transform: rotate(135deg);
+  padding: 3px;
+`;
+
+const ArrowRight = styled.div`
+  border: solid ${DARK_GREY};
+  border-width: 0 2px 2px 0;
+  transform: rotate(-45deg);
+  padding: 3px;
+`;
+
 export {
   Action,
+  ArrowDown,
+  ArrowLeft,
+  ArrowRight,
   Day,
   Event,
   EventIcon,
   EventLockup,
+  Flex,
   Grid,
   HeaderWrapper,
   IconWrapper,
+  MonthButtonWrapper,
+  MonthYrLockup,
   Number,
   NumberWrapper,
   StyledNavigation,

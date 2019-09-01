@@ -9,7 +9,7 @@ const Calendar = ({
   clearFormValues,
   currentDate,
   formSubmissionHandler,
-  getToday,
+  setToday,
   isShowing,
   navigate,
   numberOfDaysInMonth,
@@ -20,14 +20,14 @@ const Calendar = ({
   setId,
   startIdx,
   toggle,
-  toggleEventAction,
+  eventAction,
   togglingEventAction,
   viewingEvent,
 }) => (
   <Grid>
     <div>
       <Header
-        getToday={getToday}
+        setToday={setToday}
         currentDate={currentDate}
         navigate={navigate}
       />
@@ -49,7 +49,7 @@ const Calendar = ({
                 selectedDay={selectedDay}
                 setId={setId}
                 toggle={toggle}
-                toggleEventAction={toggleEventAction}
+                eventAction={eventAction}
                 togglingEventAction={togglingEventAction}
                 viewingEvent={viewingEvent}
               />

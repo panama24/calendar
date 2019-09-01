@@ -28,7 +28,7 @@ const DayContainer = ({
   selectedDay,
   setId,
   toggle,
-  toggleEventAction,
+  eventAction,
   togglingEventAction,
   viewingEvent,
 }) => {
@@ -57,14 +57,14 @@ const DayContainer = ({
     <>
       <Day ref={inputEl} onClick={() => { clickableDay ?  clickHandler() : noop()}}>
         <DayNumber day={clickableDay} today={isToday} />
-        {isScheduling && <PlaceholderEvent toggleEventAction={toggleEventAction} /> }
+        {isScheduling && <PlaceholderEvent eventAction={eventAction} /> }
         <ScheduledEvents
           clickableDay={clickableDay}
           events={events}
           isShowing={isShowing}
           popupId={popupId}
           toggle={toggle}
-          toggleEventAction={toggleEventAction}
+          eventAction={eventAction}
           viewingEvent={viewingEvent}
         />
       </Day>

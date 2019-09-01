@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { Button } from '../shared/button';
+import { DARK_GREY, GREY, HOVER_GREY, PRIMARY_BLUE, WHITE } from '../../constants/colors';
 
 const AddTimeWrapper = styled.div`
   display: flex;
@@ -23,13 +24,13 @@ const slideoutKeyframes = keyframes`
 
   100% {
     transform:scaleX(1);
-    border-bottom: 2px solid dodgerBlue;
+    border-bottom: 2px solid ${PRIMARY_BLUE};
   }
 `;
 
 const Title = styled.input`
   border: none;
-  border-bottom: 2px solid dodgerBlue;
+  border-bottom: 2px solid ${PRIMARY_BLUE};
   width: 99%;
   font-size: 24px;
   animation-duration: 0.5s;
@@ -74,7 +75,7 @@ const ActionButton = styled.div`
   }
 
   &:hover {
-    background: #eee;
+    background: #F0F8FF;
     border-radius: 3px;
     padding: 8px 6px;
     cursor: pointer;
@@ -103,9 +104,9 @@ const Save = styled(Button)`
   border-radius: 5px;
   padding: 0.5rem 0;
   width: 80px;
-  background: dodgerBlue;
+  background: ${PRIMARY_BLUE};
   color: white;
-  border: 2px solid white;
+  border: 2px solid ${WHITE};
   height: 16px;
 
   &:hover {
