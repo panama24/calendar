@@ -14,22 +14,22 @@ const DARK_GREY = '#696969';
 const LIGHT_GREY = 'WhiteSmoke';
 const WHITE = '#FFFFFF';
 
+const colors = {
+  event: 'dodgerBlue',
+  reminder: '#3333FF',
+  task: '#33CCFF',
+};
+
+const hoverColors = {
+  event: '#1476d4',
+  reminder: '#4D4DFF',
+  task: '#00BFFF',
+};
+
 const PlaceholderEvent = ({ toggleEventAction }) => {
   const title = toggleEventAction.title;
   const startTime = toggleEventAction.start;
   const eventType = toggleEventAction.type;
-
-  const colors = {
-    event: 'dodgerBlue',
-    reminder: '#3333FF',
-    task: '#33CCFF',
-  };
-
-  const hoverColors = {
-    event: '#1476d4',
-    reminder: '#4D4DFF',
-    task: '#00BFFF',
-  };
 
   const styles = {
     bgColor: startTime ? WHITE : colors[eventType],
@@ -48,7 +48,7 @@ const PlaceholderEvent = ({ toggleEventAction }) => {
           {title || ''}
         </span>
       ) : (
-        <span>{'(No Title)'}</span>
+        <span>{title || '(No Title)'}</span>
       )}
     </Event>
   );
@@ -78,9 +78,17 @@ const ScheduledEvents = ({
     viewingEvent(uniquePopupId);
   };
 
+  const styles = {
+    bgColor: startTime ? WHITE : colors.event,
+    color: startTime ? DARK_GREY : WHITE,
+    boxShadow: startTime ? '0 3px 7px rgba(0, 0, 0, 0.3)' : 'none',
+    hoverBgColor: startTime ? LIGHT_GREY : hoverColors.event,
+    hoverColor: startTime ? DARK_GREY : LIGHT_GREY,
+  };
+
   return (
     <>
-      <Event key={uniquePopupId} onClick={e => eventClickHandler(e)}>
+      <Event {...styles} key={uniquePopupId} onClick={e => eventClickHandler(e)}>
         {copy}
       </Event>
       <Popup
