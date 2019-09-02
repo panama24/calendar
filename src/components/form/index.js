@@ -18,10 +18,12 @@ import {
 
 import { Button } from '../shared/button';
 
-const TimeInputs = ({ endTime, handleInputChange, startTime }) => startTime ?  (
+const TimeInputs = ({ endTime, handleInputChange, startTime, togglingEventAction }) => startTime ?  (
+  // onBlur doesn't work
   <>
     <Time
       name='startTime'
+      onBlur={e => togglingEventAction({ [e.target.name]: e.target.value })}
       onChange={handleInputChange}
       placeholder={startTime}
       type='text'
@@ -149,6 +151,7 @@ const Form = ({ clearFormValues, formSubmissionHandler, day, togglingEventAction
                 formValues={formValues}
                 handleInputChange={handleInputChange}
                 startTime={startTime}
+                togglingEventAction={togglingEventAction}
               />
               <DateInput
                 name="endDate"

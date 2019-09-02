@@ -79,21 +79,7 @@ function App() {
     })
       .then(res => res.json())
       .then(newEvent => {
-        const { description, id, start_date_time: startDate, end_date_time: endDate, title } = newEvent[0];
-        const formatStartDate = moment(startDate).format('MMM DD, YYYY');
-        const formatEndDate = moment(endDate).format('MMM DD, YYYY');
-        const formatStartTime = moment(startDate).format('HH:mm a');
-        const formatEndTime = moment(endDate).format('HH:mm a');
-        setScheduledEvents([...scheduledEvents, {
-          id,
-          endDate: formatEndDate,
-          startDate: formatStartDate,
-          description,
-          endTime: formatEndTime,
-          startTime: formatStartTime,
-          title,
-        }])
-      })
+        setScheduledEvents([...scheduledEvents, newEvent[0]]) })
       .catch(err => console.log(err));
 
     toggle();
