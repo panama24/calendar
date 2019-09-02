@@ -60,13 +60,19 @@ function App() {
     toggle();
   };
 
+  const deleteEvent = eventId => {
+    // get by id
+    console.log(eventId);
+  };
+
   return (
     <AppContainer>
       <Calendar
         clearFormValues={clearFormValues}
         currentDate={currentDate}
+        deleteEvent={deleteEvent}
+        eventAction={eventAction}
         formSubmissionHandler={formSubmissionHandler}
-        setToday={setToday}
         isShowing={isShowing}
         navigate={navigate}
         numberOfDaysInMonth={numberOfDaysInMonth}
@@ -75,9 +81,9 @@ function App() {
         scheduledEvents={scheduledEvents}
         selectedDay={selectedDay}
         setId={setId}
+        setToday={setToday}
         startIdx={startIdx}
         toggle={toggle}
-        eventAction={eventAction}
         togglingEventAction={togglingEventAction}
         viewingEvent={viewingEvent}
       />

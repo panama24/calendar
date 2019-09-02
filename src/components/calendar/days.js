@@ -21,6 +21,7 @@ const DayContainer = ({
   currentDate,
   formSubmissionHandler,
   dayIdx,
+  deleteEvent,
   isShowing,
   popupId,
   schedulingEvent,
@@ -60,11 +61,12 @@ const DayContainer = ({
         {isScheduling && <PlaceholderEvent eventAction={eventAction} /> }
         <ScheduledEvents
           clickableDay={clickableDay}
+          deleteEvent={deleteEvent}
+          eventAction={eventAction}
           events={events}
           isShowing={isShowing}
           popupId={popupId}
           toggle={toggle}
-          eventAction={eventAction}
           viewingEvent={viewingEvent}
         />
       </Day>

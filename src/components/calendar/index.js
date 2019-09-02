@@ -8,8 +8,9 @@ import { Grid, Week } from './styles';
 const Calendar = ({
   clearFormValues,
   currentDate,
+  deleteEvent,
+  eventAction,
   formSubmissionHandler,
-  setToday,
   isShowing,
   navigate,
   numberOfDaysInMonth,
@@ -18,9 +19,9 @@ const Calendar = ({
   scheduledEvents,
   selectedDay,
   setId,
+  setToday,
   startIdx,
   toggle,
-  eventAction,
   togglingEventAction,
   viewingEvent,
 }) => (
@@ -39,6 +40,7 @@ const Calendar = ({
                 clearFormValues={clearFormValues}
                 clickableDay={clickableDay}
                 currentDate={currentDate}
+                deleteEvent={deleteEvent}
                 formSubmissionHandler={formSubmissionHandler}
                 dayIdx={dayIdx}
                 isShowing={isShowing}

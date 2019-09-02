@@ -69,11 +69,12 @@ const DescriptionIcon = () => (
 
 const ScheduledEvents = ({
   clickableDay,
+  deleteEvent,
+  eventAction,
   events,
   isShowing,
   popupId,
   toggle,
-  eventAction,
   viewingEvent,
 }) => !!events.length && events.map(({
   description,
@@ -103,9 +104,9 @@ const ScheduledEvents = ({
     console.log('edit');
   };
 
-  const deleteClickHandler = e => {
+  const deleteClickHandler = (e) => {
     e.stopPropagation();
-    console.log('delete');
+    // deleteEvent(id);
   };
 
   return (
