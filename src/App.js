@@ -86,17 +86,20 @@ function App() {
   };
 
   const deleteEvent = eventId => {
-    console.log(eventId);
-    // fetch('http://localhost:3001/events', {
-      // method: 'delete',
-      // headers: {
-        // 'Content-Type': 'application/json',
-      // },
-      // body: JSON.stringify({ id: eventId }),
-    // })
-      // .then(res => res.json())
-      // .then(newEvent => console.log('here'))
-      // .catch(err => console.log(err));
+    fetch('http://localhost:3001/events', {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id: eventId }),
+    })
+      .then(res => res.json())
+      .then(newEvent => {
+        toggle();
+        setScheduledEvents(scheduledEvents.filter(e => e.id !== eventId))
+      })
+      .catch(err => console.log(err));
+
   };
 
   return (
