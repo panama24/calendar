@@ -39,7 +39,6 @@ function App() {
   const { isShowing, popupId, setId, toggle } = usePopup();
 
   const schedulingEvent = (date, uniquePopupId) => {
-    // const dateStr = moment(date).format('YYYY-MM-DD');
     setId(uniquePopupId);
     setSelectedDay(date);
     toggle();
@@ -74,7 +73,8 @@ function App() {
         description,
         endDateTime,
         startDateTime,
-        title
+        title,
+        type: eventAction.type,
       }),
     })
       .then(res => res.json())

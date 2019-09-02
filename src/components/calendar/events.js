@@ -78,7 +78,7 @@ const ScheduledEvents = ({
   toggle,
   viewingEvent,
 }) => !!events.length &&
-  events.map(({ description, end_date_time, id: eventId, start_date_time, title }) => {
+  events.map(({ description, end_date_time, id: eventId, start_date_time, title, type }) => {
     const startDate = moment(start_date_time).format('MMM DD, YYYY');
     const endDate = moment(end_date_time).format('MMM DD, YYYY');
     const startTime = moment(start_date_time).format('HH:mm a');
@@ -90,10 +90,10 @@ const ScheduledEvents = ({
     };
 
     const styles = {
-      bgColor: startTime ? WHITE : colors.event,
+      bgColor: startTime ? WHITE : colors[type],
       color: startTime ? DARK_GREY : WHITE,
       boxShadow: startTime ? '0 3px 7px rgba(0, 0, 0, 0.3)' : 'none',
-      hoverBgColor: startTime ? LIGHT_GREY : hoverColors.event,
+      hoverBgColor: startTime ? LIGHT_GREY : hoverColors[type],
       hoverColor: startTime ? DARK_GREY : LIGHT_GREY,
     };
 
@@ -116,7 +116,7 @@ const ScheduledEvents = ({
           <div>
             <EventIcon
               size='10px'
-              color={colors.event}
+              color={colors[type]}
               margin='0 6px 0 0'
             />
             <TextWrapper margin='0 6px 0 0'>{startTime}</TextWrapper>
@@ -141,7 +141,7 @@ const ScheduledEvents = ({
                 <IconWrapper>
                   <EventIcon
                     size='14px'
-                    color={colors.event}
+                    color={colors[type]}
                     radius='25%'
                     margin='16px 0 0 0'
                   />
