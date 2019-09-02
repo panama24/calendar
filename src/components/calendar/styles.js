@@ -256,6 +256,17 @@ const ArrowRight = styled.div`
   padding: 3px;
 `;
 
+const Spacer = styled.div`
+  margin: ${({ margin }) => margin ? margin : '0'};
+`;
+
+const Line = styled.div`
+  width: ${({ width }) => width ? width : '12px'};
+  height: ${({ height }) => height ? height : '2px'};
+  background: ${DARK_GREY};
+  margin: 4px 0;
+`;
+
 export {
   Action,
   ArrowDown,
@@ -269,10 +280,12 @@ export {
   Grid,
   HeaderWrapper,
   IconWrapper,
+  Line,
   MonthButtonWrapper,
   MonthYrLockup,
   Number,
   NumberWrapper,
+  Spacer,
   StyledNavigation,
   TextWrapper,
   Toolbar,

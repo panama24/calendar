@@ -5,6 +5,8 @@ import {
   EventIcon,
   EventLockup,
   IconWrapper,
+  Line,
+  Spacer,
   TextWrapper,
   Toolbar,
   ViewEventBody,
@@ -42,8 +44,12 @@ const PlaceholderEvent = ({ eventAction }) => {
     <Event {...styles} onClick={e => e.stopPropagation()}>
       {startTime ? (
         <span>
-          <EventIcon size='10px' color={colors[eventType]} />
-          <TextWrapper>{startTime}</TextWrapper>
+          <EventIcon
+            size='10px'
+            color={colors.event}
+            margin='0 6px 0 0'
+          />
+          <TextWrapper margin='0 6px 0 0'>{startTime}</TextWrapper>
           {title || ''}
         </span>
       ) : (
@@ -52,6 +58,14 @@ const PlaceholderEvent = ({ eventAction }) => {
     </Event>
   );
 };
+
+const DescriptionIcon = () => (
+  <>
+    <Line width='14px' />
+    <Line width='14px' />
+    <Line width='10px' />
+  </>
+);
 
 const ScheduledEvents = ({
   clickableDay,
@@ -98,13 +112,17 @@ const ScheduledEvents = ({
     <>
       <Event {...styles} key={uniquePopupId} onClick={e => eventClickHandler(e)}>
         {startTime ? (
-          <span>
-            <EventIcon size='10px' color={colors.event} />
-            <TextWrapper margin='0 8px 0 0'>{startTime}</TextWrapper>
+          <div>
+            <EventIcon
+              size='10px'
+              color={colors.event}
+              margin='0 6px 0 0'
+            />
+            <TextWrapper margin='0 6px 0 0'>{startTime}</TextWrapper>
             {title || '(No Title)'}
-          </span>
+          </div>
         ) : (
-          <span>{title || '(No Title)'}</span>
+          <div>{title || '(No Title)'}</div>
         )}
       </Event>
       <Popup
@@ -124,29 +142,27 @@ const ScheduledEvents = ({
                     size='14px'
                     color={colors.event}
                     radius='25%'
-                    margin='16px 8px 0px 0px'
+                    margin='16px 0 0 0'
                   />
                 </IconWrapper>
-                <div>
+                <Spacer margin='0 0 0 24px'>
                   <div>
                     <TextWrapper fontSize='24px'>{title || '(No Title)'}</TextWrapper>
                   </div>
                   <div>
                     <TextWrapper fontSize='14px'>{`${startDate}-${endDate}`} - {`${startTime}-${endTime}`}</TextWrapper>
                   </div>
-                </div>
+                </Spacer>
               </EventLockup>
             </div>
           </EventLockup>
           <EventLockup>
             <IconWrapper>
-              <EventIcon
-                size='14px'
-                color={colors.event}
-                radius='25%'
-              />
+              <DescriptionIcon />
             </IconWrapper>
-            <span>{description}</span>
+            <Spacer margin='0 0 0 24px'>
+              <span>{description}</span>
+            </Spacer>
           </EventLockup>
         </ViewEventBody>
       </Popup>
