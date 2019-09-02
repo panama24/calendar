@@ -81,8 +81,8 @@ const ScheduledEvents = ({
   events.map(({ description, end_date_time, id: eventId, start_date_time, title, type }) => {
     const startDate = moment(start_date_time).format('MMM DD, YYYY');
     const endDate = moment(end_date_time).format('MMM DD, YYYY');
-    const startTime = moment(start_date_time).format('HH:mm a');
-    const endTime = moment(end_date_time).format('HH:mm a');
+    const startTime = moment(start_date_time).format('HH:mm') === '00:00' ? null : moment(start_date_time).format('HH:mm a');
+    const endTime = moment(end_date_time).format('HH:mm') === '00:00' ? null : moment(end_date_time).format('HH:mm a');
 
     const eventClickHandler = (e, action) => {
       e.stopPropagation();
@@ -151,7 +151,9 @@ const ScheduledEvents = ({
                     <TextWrapper fontSize='24px'>{title || '(No Title)'}</TextWrapper>
                   </div>
                   <div>
-                    <TextWrapper fontSize='14px'>{`${startDate}-${endDate}`} - {`${startTime}-${endTime}`}</TextWrapper>
+                    <TextWrapper fontSize='14px'>{`${startDate}-${endDate}`}
+                      {startTime && <span>- {`${startTime}-${endTime}`}</span>}
+                    </TextWrapper>
                   </div>
                 </Spacer>
               </EventLockup>
