@@ -79,7 +79,7 @@ const DayContainer = ({
         <Form
           formSubmissionHandler={formSubmissionHandler}
           clearFormValues={clearFormValues}
-          selectedDay={selectedDay}
+          day={selectedDay}
           togglingEventAction={togglingEventAction}
         />
       </Popup>

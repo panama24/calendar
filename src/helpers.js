@@ -2,24 +2,6 @@ import moment from 'moment';
 
 // defaults to current month
 const getNumberOfDaysInMonth = (date = null) => moment(date).daysInMonth();
-const getNearestStartEndTimes = () => {
-  const now = moment();
-  const remainder = 30 - (moment(now).minute() % 30);
-
-  const start = moment(now)
-    .add(remainder, 'minutes')
-    .format('h:mma');
-
-  const end = moment(now)
-    .add(remainder, 'minutes')
-    .add(1, 'hour')
-    .format('h:mma');
-
-  return {
-    end,
-    start,
-  };
-};
 
 // both must be moment objs - moment1 = moment(...);
 const isSameDay = (moment1, moment2) =>
@@ -29,11 +11,11 @@ const isSameDay = (moment1, moment2) =>
 
 // day must have this format: moment(day, 'YYYY-MM-DD') and
 // in some cases, append `.add(1, 'month')` bc month is 0 indexed
-const getDailyEvents = (events, day) => events.filter(({ endDate, startDate }) => {
-  const start = moment(startDate, 'MMM DD, YYYY')
+const getDailyEvents = (events, day) => events.filter(({ start_date_time: startDate, end_date_time: endDate }) => {
+  const start = moment(startDate)
     .format('YYYY-MM-DD');
 
-  const end = moment(endDate, 'MMM DD, YYYY')
+  const end = moment(endDate)
     .format('YYYY-MM-DD');
 
   const startMoment = moment(start);
@@ -46,7 +28,6 @@ const getDailyEvents = (events, day) => events.filter(({ endDate, startDate }) =
 
 export {
   getDailyEvents,
-  getNearestStartEndTimes,
   getNumberOfDaysInMonth,
   isSameDay,
 };

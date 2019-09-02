@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { Button } from '../shared/button';
-import { DARK_GREY, GREY, HOVER_GREY, PRIMARY_BLUE, WHITE } from '../../constants/colors';
+import { PRIMARY_BLUE, WHITE } from '../../constants/colors';
 
 const AddTimeWrapper = styled.div`
   display: flex;

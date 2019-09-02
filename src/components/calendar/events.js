@@ -46,7 +46,7 @@ const PlaceholderEvent = ({ eventAction }) => {
         <span>
           <EventIcon
             size='10px'
-            color={colors.event}
+            color={colors[eventType]}
             margin='0 6px 0 0'
           />
           <TextWrapper margin='0 6px 0 0'>{startTime}</TextWrapper>

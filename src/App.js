@@ -15,6 +15,11 @@ function App() {
   const [eventAction, setEventAction] = useState({ type: 'event' });
 
   useEffect(() => {
+    fetch('http://localhost:3001/events')
+      .then(res => res.json())
+      .then(data => setScheduledEvents(data))
+      .catch(err => console.log(err));
+
     const firstDay = moment(currentDate)
       .startOf('month')
       .format('YYYY-MM-DD hh:mm');
@@ -34,9 +39,9 @@ function App() {
   const { isShowing, popupId, setId, toggle } = usePopup();
 
   const schedulingEvent = (date, uniquePopupId) => {
-    const dateStr = moment(date).format('YYYY-MM-DD');
+    // const dateStr = moment(date).format('YYYY-MM-DD');
     setId(uniquePopupId);
-    setSelectedDay(dateStr);
+    setSelectedDay(date);
     toggle();
   };
 
@@ -56,7 +61,26 @@ function App() {
   }
 
   const formSubmissionHandler = values => {
-    setScheduledEvents([ ...scheduledEvents, { ...values }]);
+    const { description, endDate, startDate, title } = values;
+    const endDateTime = moment(endDate).format('YYYY/MM/DD HH:mm:ss');
+    const startDateTime = moment(startDate).format('YYYY/MM/DD HH:mm:ss');
+
+    fetch('http://localhost:3001/events', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        description,
+        endDateTime,
+        startDateTime,
+        title
+      }),
+    })
+      .then(res => res.json())
+      .then(newEvent => setScheduledEvents([...scheduledEvents, { ...newEvent[0] }]))
+      .catch(err => console.log(err));
+
     toggle();
   };
 

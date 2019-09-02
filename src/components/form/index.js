@@ -17,61 +17,83 @@ import {
 } from './styles';
 
 import { Button } from '../shared/button';
-import { getNearestStartEndTimes } from '../../helpers';
 
-const formatDate = date => moment(date).format('MMM DD, YYYY');
-
-const TimeInputs = ({
-  endTime,
-  formValues,
-  handleInputChange,
-  startTime
-}) => startTime ?  (
+const TimeInputs = ({ endTime, handleInputChange, startTime }) => startTime ?  (
   <>
     <Time
-      name="startTime"
+      name='startTime'
       onChange={handleInputChange}
       placeholder={startTime}
-      type="text"
-      value={formValues.startTime || startTime}
+      type='text'
+      value={startTime}
     />-
     <Time
-      name="endTime"
+      name='endTime'
       onChange={handleInputChange}
       placeholder={endTime}
-      type="text"
-      value={formValues.endTime || endTime}
+      type='text'
+      value={endTime}
     />
   </>
-) : (
+  ) : (
   <>-</>
 );
 
-const initialState = selectedDay => ({
+const getStartEndDates = day => {
+  const now = moment();
+  const remainder = 30 - (moment(now).minute() % 30);
+  const start = moment(now)
+    .add(remainder, 'minutes')
+    .format('h:mm a');
+
+  let dateStr = day,
+    timeStr = start,
+    startDate    = moment(dateStr),
+    time    = moment(timeStr, 'hh:mm a');
+
+  startDate.set({
+    hour:   time.get('hour'),
+    minute: time.get('minute'),
+    second: time.get('second')
+  });
+
+  const endDate = moment(startDate).add(1, 'hour');
+
+  return {
+    startDate,
+    endDate,
+  };
+};
+
+const initialState = day => ({
   title: '',
   description: '',
-  startDate: formatDate(selectedDay),
-  endDate: formatDate(selectedDay),
+  startDate: day,
+  endDate: day,
   startTime: '',
-  endTime: ''
+  endTime: '',
 });
 
-const Form = ({ clearFormValues, formSubmissionHandler, selectedDay, togglingEventAction }) => {
-  const [formValues, setFormValues] = useState(initialState(selectedDay));
-
-  const formattedDate = formatDate(selectedDay);
+const Form = ({ clearFormValues, formSubmissionHandler, day, togglingEventAction }) => {
+  const [formValues, setFormValues] = useState(initialState(day));
 
   useEffect(() => {
     return () => clearFormValues();
   }, []);
 
   const handleTimeSelect = () => {
-    const { end, start } = getNearestStartEndTimes();
-    togglingEventAction({ end, start })
+    const { endDate, startDate } = getStartEndDates(day);
+    const formatStart = moment(startDate).format('hh:mm a');
+    const formatEnd = moment(endDate).format('hh:mm a');
+
+    togglingEventAction({ end: formatEnd, start: formatStart })
+
     setFormValues({
       ...formValues,
-      startTime: start,
-      endTime: end
+      endDate,
+      startDate,
+      startTime: formatStart,
+      endTime: formatEnd,
     });
   }
 
@@ -80,6 +102,14 @@ const Form = ({ clearFormValues, formSubmissionHandler, selectedDay, togglingEve
     setFormValues({ ...formValues, [name]: value });
   };
 
+  const {
+    description,
+    endDate,
+    endTime,
+    startDate,
+    startTime,
+    title,
+    } = formValues;
   return (
     <FormWrapper>
       <form>
@@ -90,7 +120,7 @@ const Form = ({ clearFormValues, formSubmissionHandler, selectedDay, togglingEve
             onChange={handleInputChange}
             placeholder='Add title and time'
             type="text"
-            value={formValues.title}
+            value={title}
           />
         </TitleWrapper>
         <ActionsWrapper>
@@ -110,27 +140,27 @@ const Form = ({ clearFormValues, formSubmissionHandler, selectedDay, togglingEve
               <DateInput
                 name="startDate"
                 onChange={handleInputChange}
-                placeholder={formattedDate}
+                placeholder={moment(startDate).format('MMM DD, YYYY')}
                 type="text"
-                value={formValues.startDate}
+                value={moment(startDate).format('MMM DD, YYYY')}
               />
               <TimeInputs
-                endTime={formValues.endTime}
+                endTime={endTime}
                 formValues={formValues}
                 handleInputChange={handleInputChange}
-                startTime={formValues.startTime}
+                startTime={startTime}
               />
               <DateInput
                 name="endDate"
                 onChange={handleInputChange}
-                placeholder={formattedDate}
+                placeholder={moment(endDate).format('MMM DD, YYYY')}
                 type="text"
-                value={formValues.endDate}
+                value={moment(endDate).format('MMM DD, YYYY')}
               />
             </div>
             <Button
               type="button"
-              hide={formValues.startTime}
+              hide={startTime}
               onClick={() => handleTimeSelect()}>
               Add Time
             </Button>
@@ -141,7 +171,7 @@ const Form = ({ clearFormValues, formSubmissionHandler, selectedDay, togglingEve
               onChange={handleInputChange}
               placeholder='Add description'
               type="text"
-              value={formValues.description}
+              value={description}
             />
           </DescriptionWrapper>
         </div>
