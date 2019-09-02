@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import {
   Action,
   Event,
@@ -76,40 +77,39 @@ const ScheduledEvents = ({
   popupId,
   toggle,
   viewingEvent,
-}) => !!events.length && events.map(({
-  description,
-  endDate,
-  endTime,
-  startDate,
-  startTime,
-  title
-}) => {
-  const eventClickHandler = (e, action) => {
-    e.stopPropagation();
-    viewingEvent(uniquePopupId);
-  };
+}) => !!events.length &&
+  events.map(({ description, end_date_time, id: eventId, start_date_time, title }) => {
+    const startDate = moment(start_date_time).format('MMM DD, YYYY');
+    const endDate = moment(end_date_time).format('MMM DD, YYYY');
+    const startTime = moment(start_date_time).format('HH:mm a');
+    const endTime = moment(end_date_time).format('HH:mm a');
 
-  const styles = {
-    bgColor: startTime ? WHITE : colors.event,
-    color: startTime ? DARK_GREY : WHITE,
-    boxShadow: startTime ? '0 3px 7px rgba(0, 0, 0, 0.3)' : 'none',
-    hoverBgColor: startTime ? LIGHT_GREY : hoverColors.event,
-    hoverColor: startTime ? DARK_GREY : LIGHT_GREY,
-  };
+    const eventClickHandler = (e, action) => {
+      e.stopPropagation();
+      viewingEvent(uniquePopupId);
+    };
 
-  const uniquePopupId = `view-event-${clickableDay}`;
+    const styles = {
+      bgColor: startTime ? WHITE : colors.event,
+      color: startTime ? DARK_GREY : WHITE,
+      boxShadow: startTime ? '0 3px 7px rgba(0, 0, 0, 0.3)' : 'none',
+      hoverBgColor: startTime ? LIGHT_GREY : hoverColors.event,
+      hoverColor: startTime ? DARK_GREY : LIGHT_GREY,
+    };
 
-  const editClickHandler = e => {
-    e.stopPropagation();
-    console.log('edit');
-  };
+    const uniquePopupId = `view-event-${clickableDay}`;
 
-  const deleteClickHandler = (e) => {
-    e.stopPropagation();
-    // deleteEvent(id);
-  };
+    const editClickHandler = e => {
+      e.stopPropagation();
+      console.log('edit');
+    };
 
-  return (
+    const deleteClickHandler = (e) => {
+      e.stopPropagation();
+      deleteEvent(eventId);
+    };
+
+    return (
     <>
       <Event {...styles} key={uniquePopupId} onClick={e => eventClickHandler(e)}>
         {startTime ? (
