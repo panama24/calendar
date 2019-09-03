@@ -19,11 +19,9 @@ import {
 import { Button } from '../shared/button';
 
 const TimeInputs = ({ endTime, handleInputChange, startTime, togglingEventAction }) => startTime ?  (
-  // onBlur doesn't work
   <>
     <Time
       name='startTime'
-      onBlur={e => togglingEventAction({ [e.target.name]: e.target.value })}
       onChange={handleInputChange}
       placeholder={startTime}
       type='text'
@@ -70,8 +68,8 @@ const getStartEndDates = day => {
 const initialState = day => ({
   title: '',
   description: '',
-  startDate: day,
-  endDate: day,
+  startDate: moment(day).format('MMM DD, YYYY'),
+  endDate: moment(day).format('MMM DD, YYYY'),
   startTime: '',
   endTime: '',
 });
@@ -85,15 +83,15 @@ const Form = ({ clearFormValues, formSubmissionHandler, day, togglingEventAction
 
   const handleTimeSelect = () => {
     const { endDate, startDate } = getStartEndDates(day);
-    const formatStart = moment(startDate).format('hh:mm a');
-    const formatEnd = moment(endDate).format('hh:mm a');
+    const formatStart = moment(startDate)
+      .format('hh:mm a');
+    const formatEnd = moment(endDate)
+      .format('hh:mm a');
 
     togglingEventAction({ end: formatEnd, start: formatStart })
 
     setFormValues({
       ...formValues,
-      endDate,
-      startDate,
       startTime: formatStart,
       endTime: formatEnd,
     });
@@ -111,7 +109,7 @@ const Form = ({ clearFormValues, formSubmissionHandler, day, togglingEventAction
     startDate,
     startTime,
     title,
-    } = formValues;
+  } = formValues;
   return (
     <FormWrapper>
       <form>
@@ -142,13 +140,12 @@ const Form = ({ clearFormValues, formSubmissionHandler, day, togglingEventAction
               <DateInput
                 name="startDate"
                 onChange={handleInputChange}
-                placeholder={moment(startDate).format('MMM DD, YYYY')}
+                placeholder={startDate}
                 type="text"
-                value={moment(startDate).format('MMM DD, YYYY')}
+                value={startDate}
               />
               <TimeInputs
                 endTime={endTime}
-                formValues={formValues}
                 handleInputChange={handleInputChange}
                 startTime={startTime}
                 togglingEventAction={togglingEventAction}
@@ -156,9 +153,9 @@ const Form = ({ clearFormValues, formSubmissionHandler, day, togglingEventAction
               <DateInput
                 name="endDate"
                 onChange={handleInputChange}
-                placeholder={moment(endDate).format('MMM DD, YYYY')}
+                placeholder={endDate}
                 type="text"
-                value={moment(endDate).format('MMM DD, YYYY')}
+                value={endDate}
               />
             </div>
             <Button

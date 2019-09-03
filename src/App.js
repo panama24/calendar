@@ -60,9 +60,29 @@ function App() {
   }
 
   const formSubmissionHandler = values => {
-    const { description, endDate, startDate, title } = values;
-    const endDateTime = moment(endDate).format('YYYY/MM/DD HH:mm:ss');
-    const startDateTime = moment(startDate).format('YYYY/MM/DD HH:mm:ss');
+    const { description, endDate, endTime, startDate, startTime, title } = values;
+    const endDateTime = moment(`${endDate} ${endTime}`, 'MMM DD, YYYY HH:mm').format('YYYY/MM/DD HH:mm:ss');
+    const startDateTime = moment(`${startDate} ${startTime}`, 'MMM DD, YYYY').format('YYYY/MM/DD HH:mm:ss');
+    // const eventDaySpan = Math.abs(moment(startDate, 'MMM DD, YYYY').diff(moment(endDate, 'MMM DD, YYYY'), 'days')) + 1;
+
+    // console.log(startDate, endDate);
+    // const eventArr = Array.from(Array(eventDaySpan)).map((e, i) => {
+      // // console.log(moment(startDate).add(i, 'days').format('YYYY/MM/DD HH:mm:ss'));
+      // const endDateTime = moment(endDate)
+        // .add(i, 'days')
+        // .format('YYYY/MM/DD HH:mm:ss');
+      // const startDateTime = moment(startDate)
+        // .add(i, 'days')
+        // .format('YYYY/MM/DD HH:mm:ss');
+      // return {
+        // description,
+        // endDateTime,
+        // startDateTime,
+        // title,
+        // type: eventAction.type,
+      // }
+    // })
+    // console.log(eventArr);
 
     fetch('http://localhost:3001/events', {
       method: 'post',

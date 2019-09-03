@@ -84,6 +84,14 @@ const ScheduledEvents = ({
     const startTime = moment(start_date_time).format('HH:mm') === '00:00' ? null : moment(start_date_time).format('HH:mm a');
     const endTime = moment(end_date_time).format('HH:mm') === '00:00' ? null : moment(end_date_time).format('HH:mm a');
 
+    // if event spans only one day
+    // Tuesday, February 11, 2019 - 10:00am - 11:00am
+    // if spans multiple days
+    // February 11, 2020, 10:00am = February 14, 2020, 11:00am
+
+
+    // handle events spanning multiple days in UI
+
     const eventClickHandler = (e, action) => {
       e.stopPropagation();
       viewingEvent(uniquePopupId);

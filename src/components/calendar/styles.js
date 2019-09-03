@@ -126,8 +126,15 @@ const StyledNavigation = styled.button`
   border: none;
   color: ${DARK_GREY};
   cursor: pointer;
-  font-size: 24px;
   margin: ${({ margin }) => margin && margin};
+  background: ${WHITE};
+  border-radius: 30px;
+  padding: 12px;
+
+  &:hover {
+    background: ${HOVER_GREY};
+    padding: 12px;
+  }
 
   &:focus {
     outline: none;
